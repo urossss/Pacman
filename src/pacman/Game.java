@@ -25,32 +25,67 @@ public class Game implements Runnable {
 	public void run() {
 		init();
 
-		int fps = 60;
-		double timePerTick = 1000000000.0 / fps;
-		double delta = 0;
-		long now, timer = 0;
-		int ticks = 0;
-		long lastTime = System.nanoTime();
+		final int FPS = 60;
+		final double TIME_PER_TICK = 1000000000.0 / FPS; // time per tick in nanoseconds
+
+		long nextGameTick = System.nanoTime();
+		int sleepTime; // sleep time in milliseconds
+
+		long currentNanoTime, previousNanoTime = System.nanoTime();
+
+		// tracking average fps and tick length
+		final boolean PERF_TRACKING_ENABLED = false;
+		int currentTickCount = 0;
+		long timer = 0;
+		long totalTickCount = 0, totalTickLength = 0, lastTickLength, maxTickLength = 0;
 
 		// Game loop
-		while (running) {
-			now = System.nanoTime();
-			delta += (now - lastTime) / timePerTick;
-			timer += now - lastTime;
-			lastTime = now;
+		while (this.running) {
+			currentNanoTime = System.nanoTime();
 
-			if (delta >= 1) {
-				update();
-				render();
+			// Tick the game if it's time for it
+			if (currentNanoTime >= nextGameTick) {
+				currentTickCount++;
+				totalTickCount++;
 
-				ticks++;
-				delta--;
+				this.update();
+				this.render();
+
+				nextGameTick += TIME_PER_TICK;
+
+				if (PERF_TRACKING_ENABLED) {
+					lastTickLength = System.nanoTime() - currentNanoTime;
+					totalTickLength += lastTickLength;
+					maxTickLength = Math.max(maxTickLength, lastTickLength);
+					if (lastTickLength > TIME_PER_TICK) {
+						System.out.println("Last tick length: " + lastTickLength / 1000000.0 + " ms");
+					}
+				}
 			}
 
-			if (timer >= 1000000000) {
-				//System.out.println("Ticks and frames: " + ticks);
-				ticks = 0;
-				timer = 0;
+			// Perf metrics
+			if (PERF_TRACKING_ENABLED) {
+				timer += currentNanoTime - previousNanoTime;
+				previousNanoTime = currentNanoTime;
+
+				if (timer >= 1000000000) {
+					System.out.println("fps: " + currentTickCount);
+					System.out.printf("Average tick length: %.6fms\n", (1.0 * totalTickLength / totalTickCount) / 1000000.0);
+					System.out.printf("Max tick length: %.6fms\n", maxTickLength / 1000000.0);
+					currentTickCount = 0;
+					timer = 0;
+				}
+			}
+
+			// Sleep until next tick to save CPU time
+			sleepTime = (int) ((nextGameTick - currentNanoTime) / 1000000); // sleep time is in milliseconds
+
+			if (sleepTime > 0) {
+				try {
+					Thread.sleep(sleepTime);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 
