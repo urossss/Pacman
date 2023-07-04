@@ -1,5 +1,10 @@
-/.idea/
-/out/
-pacman.iml
+# Ignore everything
+*
 
-/src/res/
+# Don't ignore folders
+!*/
+
+# Don't ignore .gitignore, pacman package and sprite sheet
+!.gitignore
+!/src/pacman/**
+!/src/res/textures/sheet.png

@@ -1,6 +1,10 @@
 package pacman;
 
 import pacman.display.Display;
+import pacman.graphics.ImageAssets;
+
+import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 public class Game implements Runnable {
 
@@ -12,6 +16,10 @@ public class Game implements Runnable {
 	// Game loop
 	private boolean running = false;
 	private Thread thread;
+
+	// Rendering
+	private BufferStrategy bs;
+	private Graphics g;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -120,13 +128,13 @@ public class Game implements Runnable {
 	// Game loop implementation
 
 	private void init() {
+		// Assets
+		ImageAssets.init();
+
 		// Display
 		display = new Display(title, width, height);
 //		display.getFrame().addKeyListener(keyManager);
-//
-//		// Assets
-//		Assets.init();
-//
+
 //		// Handler
 //		handler = new Handler(this);
 //
@@ -147,7 +155,26 @@ public class Game implements Runnable {
 	}
 
 	private void render() {
+		// Get Graphics object
+		this.bs = this.display.getCanvas().getBufferStrategy();
+		if (this.bs == null) {   // calling this method fot the first time
+			this.display.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		this.g = this.bs.getDrawGraphics();
 
+		// Clear the screen
+		this.g.clearRect(0, 0, this.width, this.height);
+
+		// Draw here
+		g.drawImage(ImageAssets.title, 200, 50, null);
+		for (int i = 0; i < 4; i++) {
+			g.drawImage(ImageAssets.ghost_scared[i], 50 * i, 50 * i, 50, 50, null);
+		}
+
+		// End drawing
+		this.bs.show();
+		this.g.dispose();
 	}
 
 }

@@ -27,7 +27,6 @@ public class Display {
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setResizable(false);
 		this.frame.setLocationRelativeTo(null);
-		this.frame.setVisible(true);
 		this.frame.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/res/icon/icon.png")));
 
 		this.canvas = new Canvas();
@@ -38,6 +37,8 @@ public class Display {
 
 		this.frame.add(this.canvas);
 		this.frame.pack();
+
+		this.frame.setVisible(true);
 	}
 
 	public JFrame getFrame() {
