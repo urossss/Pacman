@@ -1,4 +1,4 @@
-package pacman;
+package pacman.core;
 
 import pacman.display.Display;
 import pacman.graphics.ImageAssets;
@@ -20,6 +20,9 @@ public class Game implements Runnable {
 	// Rendering
 	private BufferStrategy bs;
 	private Graphics g;
+
+	// Game board
+	private Board board;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -128,12 +131,17 @@ public class Game implements Runnable {
 	// Game loop implementation
 
 	private void init() {
+		// Display
+		this.display = new Display(title, width, height);
+
+		// start loading state here maybe?
+
+//		display.getFrame().addKeyListener(keyManager);
+
 		// Assets
 		ImageAssets.init();
 
-		// Display
-		display = new Display(title, width, height);
-//		display.getFrame().addKeyListener(keyManager);
+		this.board = new Board("/res/maps/map.txt");
 
 //		// Handler
 //		handler = new Handler(this);
@@ -167,10 +175,7 @@ public class Game implements Runnable {
 		this.g.clearRect(0, 0, this.width, this.height);
 
 		// Draw here
-		g.drawImage(ImageAssets.title, 200, 50, null);
-		for (int i = 0; i < 4; i++) {
-			g.drawImage(ImageAssets.ghost_scared[i], 50 * i, 50 * i, 50, 50, null);
-		}
+		this.board.render(g);
 
 		// End drawing
 		this.bs.show();

@@ -8,4 +8,5 @@
 !.gitignore
 !/src/pacman/**
 !/src/res/icon/*
+!/src/res/maps/map.txt
 !/src/res/textures/sheet.png
