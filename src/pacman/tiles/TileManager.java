@@ -7,10 +7,10 @@ public class TileManager {
 
 	public TileManager() {
 		tiles = new Tile[]{
-				new EmptyTile(0),
-				new WallTile(1),
-				new FoodTile(2),
-				new PowerFoodTile(3)
+			new EmptyTile(0),
+			new WallTile(1),
+			new FoodTile(2),
+			new PowerFoodTile(3)
 		};
 	}
 

@@ -12,7 +12,7 @@ public class Utils {
 
 		try {
 			InputStream inputStream = Utils.class.getResourceAsStream(path);
-			if (inputStream == null) {  // invalid file path
+			if (inputStream == null) { // invalid file path
 				return null;
 			}
 
