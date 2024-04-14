@@ -9,10 +9,16 @@ import java.awt.*;
 
 public class Board {
 
+	private static final String DefaultMapPath = "/res/maps/map.txt";
+
 	private int width, height;
 	private Tile[][] tiles;
 
 	private TileManager tileManager = new TileManager();
+
+	public Board() {
+		this(DefaultMapPath);
+	}
 
 	public Board(String mapPath) {
 		this.loadMap(mapPath);

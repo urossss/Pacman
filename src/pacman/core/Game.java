@@ -2,6 +2,7 @@ package pacman.core;
 
 import pacman.display.Display;
 import pacman.graphics.ImageAssets;
+import pacman.states.StateManager;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -21,8 +22,10 @@ public class Game implements Runnable {
 	private BufferStrategy bs;
 	private Graphics g;
 
-	// Game board
-	private Board board;
+	// Game handler
+	private Handler handler;
+
+	private StateManager stateManager;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -131,6 +134,8 @@ public class Game implements Runnable {
 	// Game loop implementation
 
 	private void init() {
+		System.out.println("init started " + System.nanoTime());
+
 		// Display
 		this.display = new Display(title, width, height);
 
@@ -139,14 +144,19 @@ public class Game implements Runnable {
 //		display.getFrame().addKeyListener(keyManager);
 
 		// Assets
+		System.out.println("asset load started " + System.nanoTime());
 		ImageAssets.init();
-
-		this.board = new Board("/res/maps/map.txt");
+		System.out.println("asset load ended " + System.nanoTime());
 
 //		// Handler
-//		handler = new Handler(this);
-//
-//		// States
+		this.handler = new Handler(this);
+		this.handler.setBoard(new Board());
+
+		this.stateManager = new StateManager(this.handler);
+		this.handler.setStateManager(this.stateManager);
+
+		this.stateManager.init();
+
 //		menuState = new MenuState(handler);
 //		readyState = new ReadyState(handler);
 //		gameState = new GameState(handler);
@@ -156,16 +166,18 @@ public class Game implements Runnable {
 //		newRecordState = new NewRecordState(handler);
 //
 //		menuState.start();
+
+		System.out.println("init ended " + System.nanoTime());
 	}
 
 	private void update() {
-
+		this.stateManager.update();
 	}
 
 	private void render() {
 		// Get Graphics object
 		this.bs = this.display.getCanvas().getBufferStrategy();
-		if (this.bs == null) {   // calling this method fot the first time
+		if (this.bs == null) { // calling this method for the first time
 			this.display.getCanvas().createBufferStrategy(3);
 			return;
 		}
@@ -175,7 +187,8 @@ public class Game implements Runnable {
 		this.g.clearRect(0, 0, this.width, this.height);
 
 		// Draw here
-		this.board.render(g);
+//		this.board.render(g);
+		this.stateManager.render(g);
 
 		// End drawing
 		this.bs.show();
