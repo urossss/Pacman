@@ -134,28 +134,31 @@ public class Game implements Runnable {
 	// Game loop implementation
 
 	private void init() {
-		System.out.println("init started " + System.nanoTime());
-
 		// Display
 		this.display = new Display(title, width, height);
 
-		// start loading state here maybe?
-
-//		display.getFrame().addKeyListener(keyManager);
-
-		// Assets
-		System.out.println("asset load started " + System.nanoTime());
-		ImageAssets.init();
-		System.out.println("asset load ended " + System.nanoTime());
-
-//		// Handler
+		// Handler
 		this.handler = new Handler(this);
-		this.handler.setBoard(new Board());
 
 		this.stateManager = new StateManager(this.handler);
 		this.handler.setStateManager(this.stateManager);
 
-		this.stateManager.init();
+		this.stateManager.startLoadingState();
+
+		// Input manager
+//		display.getFrame().addKeyListener(keyManager);
+
+		// Asynchronously load assets and start the game
+		new Thread(() -> {
+			// Assets
+			ImageAssets.init();
+
+			// The board can be created now since the tile image assets are ready
+			this.handler.setBoard(new Board());
+
+			this.stateManager.startGameState();
+		}).start();
+
 
 //		menuState = new MenuState(handler);
 //		readyState = new ReadyState(handler);
@@ -164,10 +167,6 @@ public class Game implements Runnable {
 //		pacmanDiedState = new PacmanDiedState(handler);
 //		gameOverState = new GameOverState(handler);
 //		newRecordState = new NewRecordState(handler);
-//
-//		menuState.start();
-
-		System.out.println("init ended " + System.nanoTime());
 	}
 
 	private void update() {
