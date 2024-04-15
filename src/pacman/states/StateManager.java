@@ -9,14 +9,16 @@ public class StateManager {
 	private State currentState = null;
 	private Handler handler;
 
-	protected State gameState;
 	protected State loadingState;
+	protected State menuState;
+	protected State gameState;
 
 	public StateManager(Handler handler) {
 		this.handler = handler;
 
-		this.gameState = new GameState(this.handler);
 		this.loadingState = new LoadingState(this.handler);
+		this.menuState = new MenuState(this.handler);
+		this.gameState = new GameState(this.handler);
 	}
 
 	// Game loop interface
@@ -35,6 +37,10 @@ public class StateManager {
 
 	public void startLoadingState() {
 		this.loadingState.start();
+	}
+
+	public void startMenuState() {
+		this.menuState.start();
 	}
 
 	public void startGameState() {

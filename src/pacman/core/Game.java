@@ -159,10 +159,7 @@ public class Game implements Runnable {
 			// Assets
 			ImageAssets.init();
 
-			// The board can be created now since the tile image assets are ready
-			this.handler.setBoard(new Board());
-
-			this.stateManager.startGameState();
+			this.stateManager.startMenuState();
 		}).start();
 
 //		menuState = new MenuState(handler);
@@ -202,6 +199,12 @@ public class Game implements Runnable {
 	}
 
 	// Game logic
+
+	public void restartGame() {
+		// todo: reset lives and score counters
+
+		this.handler.setBoard(new Board());
+	}
 
 	public int getScore() {
 		return score;
