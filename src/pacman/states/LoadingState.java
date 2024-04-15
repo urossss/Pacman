@@ -7,7 +7,7 @@ import java.awt.*;
 public class LoadingState extends State {
 
 	public LoadingState(Handler handler) {
-		super(handler);
+		super(handler, false, false, false);
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class LoadingState extends State {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void renderImpl(Graphics g) {
 		g.setColor(Color.red);
 		g.fillRect(0, 0, 100, 100);
 	}

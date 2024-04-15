@@ -15,6 +15,7 @@ public class ImageAssets {
 	public static BufferedImage[] digits, letters;
 	public static BufferedImage[] ghost_red, ghost_pink, ghost_blue, ghost_orange, ghost_scared, ghost_eaten;
 	public static BufferedImage map1, map2, food, powerFood;
+	public static BufferedImage underscore;
 
 	public static void init() {
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/res/textures/sheet.png"));
@@ -23,6 +24,7 @@ public class ImageAssets {
 
 		letters = loadArray(sheet, 0, 293, 26, LETTER_SIZE);
 		digits = loadArray(sheet, 0, 302, 10, DIGIT_SIZE);
+		underscore = sheet.crop(234, 294, 8, 8);
 
 		ghost_red = loadArray(sheet, 0, 124, 8, GHOST_SIZE);
 		ghost_pink = loadArray(sheet, 0, 124 + GHOST_SIZE, 8, GHOST_SIZE);
@@ -47,5 +49,4 @@ public class ImageAssets {
 
 		return arr;
 	}
-
 }

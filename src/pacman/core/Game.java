@@ -24,8 +24,11 @@ public class Game implements Runnable {
 
 	// Game handler
 	private Handler handler;
-
 	private StateManager stateManager;
+
+	// Game variables
+	private int score = 0, highScore = 0;
+	private String highScorePlayer = "test";
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -195,4 +198,18 @@ public class Game implements Runnable {
 		this.g.dispose();
 	}
 
+	// Game logic
+
+
+	public int getScore() {
+		return score;
+	}
+
+	public int getHighScore() {
+		return highScore;
+	}
+
+	public String getHighScorePlayer() {
+		return highScorePlayer;
+	}
 }

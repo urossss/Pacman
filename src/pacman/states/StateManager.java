@@ -34,11 +34,11 @@ public class StateManager {
 	}
 
 	public void startLoadingState() {
-		this.setCurrentState(this.loadingState);
+		this.loadingState.start();
 	}
 
 	public void startGameState() {
-		this.setCurrentState(this.gameState);
+		this.gameState.start();
 	}
 
 	// Implementation
