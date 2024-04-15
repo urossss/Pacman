@@ -64,7 +64,7 @@ public class MenuState extends State {
 	@Override
 	public void update() {
 		if (this.titleLoaded && this.handler.getKeyManager().space) {
-			this.handler.getStateManager().startMenuState(); // todo: startGameState
+			this.handler.getStateManager().startGameState();
 			return;
 		}
 
