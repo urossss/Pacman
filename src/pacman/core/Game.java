@@ -2,6 +2,7 @@ package pacman.core;
 
 import pacman.display.Display;
 import pacman.graphics.ImageAssets;
+import pacman.input.KeyManager;
 import pacman.states.StateManager;
 
 import java.awt.*;
@@ -25,6 +26,7 @@ public class Game implements Runnable {
 	// Game handler
 	private Handler handler;
 	private StateManager stateManager;
+	private KeyManager keyManager;
 
 	// Game variables
 	private int score = 0, highScore = 0;
@@ -146,10 +148,11 @@ public class Game implements Runnable {
 		this.stateManager = new StateManager(this.handler);
 		this.handler.setStateManager(this.stateManager);
 
-		this.stateManager.startLoadingState();
+		this.keyManager = new KeyManager();
+		this.handler.setKeyManager(this.keyManager);
+		this.display.getFrame().addKeyListener(this.keyManager);
 
-		// Input manager
-//		display.getFrame().addKeyListener(keyManager);
+		this.stateManager.startLoadingState();
 
 		// Asynchronously load assets and start the game
 		new Thread(() -> {
@@ -162,7 +165,6 @@ public class Game implements Runnable {
 			this.stateManager.startGameState();
 		}).start();
 
-
 //		menuState = new MenuState(handler);
 //		readyState = new ReadyState(handler);
 //		gameState = new GameState(handler);
@@ -173,6 +175,7 @@ public class Game implements Runnable {
 	}
 
 	private void update() {
+		this.keyManager.update();
 		this.stateManager.update();
 	}
 
@@ -199,7 +202,6 @@ public class Game implements Runnable {
 	}
 
 	// Game logic
-
 
 	public int getScore() {
 		return score;
