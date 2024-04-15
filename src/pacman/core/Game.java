@@ -183,9 +183,10 @@ public class Game implements Runnable {
 		this.g = this.bs.getDrawGraphics();
 
 		// Clear the screen
-		this.g.clearRect(0, 0, this.width, this.height);
+		this.g.setColor(Color.black);
+		this.g.fillRect(0, 0, this.width, this.height);
 
-		// Draw here
+		// Draw game here
 //		this.board.render(g);
 		this.stateManager.render(g);
 

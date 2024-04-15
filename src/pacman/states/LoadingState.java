@@ -22,6 +22,7 @@ public class LoadingState extends State {
 
 	@Override
 	public void render(Graphics g) {
+		g.setColor(Color.red);
 		g.fillRect(0, 0, 100, 100);
 	}
 }
