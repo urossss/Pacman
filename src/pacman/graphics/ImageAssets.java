@@ -7,13 +7,13 @@ import java.awt.image.BufferedImage;
 
 public class ImageAssets {
 
-	private static final int WIDTH = 8, HEIGHT = 8;
-
-	private static final int DIGIT_SIZE = 9, LETTER_SIZE = 9, GHOST_SIZE = 16;
+	private static final int DIGIT_SIZE = 9, LETTER_SIZE = 9, GHOST_SIZE = 16, PLAYER_SIZE = 16;
 
 	public static BufferedImage title;
 	public static BufferedImage[] digits, letters;
-	public static BufferedImage[] ghost_red, ghost_pink, ghost_blue, ghost_orange, ghost_scared, ghost_eaten;
+	public static BufferedImage[][] ghost_up, ghost_down, ghost_left, ghost_right;
+	public static BufferedImage[] ghost_scared_1, ghost_scared_2, ghost_eaten;
+	public static BufferedImage[] player_up, player_down, player_left, player_right, player_eaten;
 	public static BufferedImage map1, map2, food, powerFood;
 	public static BufferedImage underscore;
 
@@ -26,12 +26,35 @@ public class ImageAssets {
 		digits = loadArray(sheet, 0, 302, 10, DIGIT_SIZE);
 		underscore = sheet.crop(234, 294, 8, 8);
 
-		ghost_red = loadArray(sheet, 0, 124, 8, GHOST_SIZE);
-		ghost_pink = loadArray(sheet, 0, 124 + GHOST_SIZE, 8, GHOST_SIZE);
-		ghost_blue = loadArray(sheet, 0, 124 + GHOST_SIZE * 2, 8, GHOST_SIZE);
-		ghost_orange = loadArray(sheet, 0, 124 + GHOST_SIZE * 3, 8, GHOST_SIZE);
-		ghost_scared = loadArray(sheet, 0, 124 + GHOST_SIZE * 4, 4, GHOST_SIZE);
+		ghost_right = new BufferedImage[4][2];
+		for (int i = 0; i < 4; i++) {
+			ghost_right[i] = loadArray(sheet, 0, 124 + i * GHOST_SIZE, 2, GHOST_SIZE);
+		}
+
+		ghost_left = new BufferedImage[4][2];
+		for (int i = 0; i < 4; i++) {
+			ghost_left[i] = loadArray(sheet, GHOST_SIZE * 2, 124 + i * GHOST_SIZE, 2, GHOST_SIZE);
+		}
+
+		ghost_up = new BufferedImage[4][2];
+		for (int i = 0; i < 4; i++) {
+			ghost_up[i] = loadArray(sheet, GHOST_SIZE * 4, 124 + i * GHOST_SIZE, 2, GHOST_SIZE);
+		}
+
+		ghost_down = new BufferedImage[4][2];
+		for (int i = 0; i < 4; i++) {
+			ghost_down[i] = loadArray(sheet, GHOST_SIZE * 6, 124 + i * GHOST_SIZE, 2, GHOST_SIZE);
+		}
+
+		ghost_scared_1 = loadArray(sheet, 0, 124 + GHOST_SIZE * 4, 2, GHOST_SIZE);
+		ghost_scared_2 = loadArray(sheet, GHOST_SIZE * 2, 124 + GHOST_SIZE * 4, 2, GHOST_SIZE);
 		ghost_eaten = loadArray(sheet, GHOST_SIZE * 4, 124 + GHOST_SIZE * 4, 4, GHOST_SIZE);
+
+		player_eaten = loadArray(sheet, 0, 258, 16, PLAYER_SIZE);
+		player_right = loadArray(sheet, 0, 89, 4, PLAYER_SIZE);
+		player_left = loadArray(sheet, 0, 105, 4, PLAYER_SIZE);
+		player_up = loadArray(sheet, 64, 89, 4, PLAYER_SIZE);
+		player_down = loadArray(sheet, 64, 105, 4, PLAYER_SIZE);
 
 		map1 = sheet.crop(202, 0, 224, 248);
 		map2 = sheet.crop(432, 0, 224, 248);
