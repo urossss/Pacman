@@ -76,12 +76,18 @@ public class KeyManager implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		keys[e.getKeyCode()] = true;
+		int keyCode = e.getKeyCode();
+		if (keyCode >= 0 && keyCode < 256) {
+			keys[e.getKeyCode()] = true;
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		keys[e.getKeyCode()] = false;
+		int keyCode = e.getKeyCode();
+		if (keyCode >= 0 && keyCode < 256) {
+			keys[e.getKeyCode()] = false;
+		}
 	}
 
 	@Override
