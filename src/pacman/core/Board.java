@@ -42,6 +42,19 @@ public class Board {
 		}
 	}
 
+	// Public interface
+
+	public boolean canMoveToTile(int x, int y) {
+		if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
+//			if (y == 14) {
+//				return Tile.emptyTile;
+//			}
+			return false;
+		}
+
+		return !this.tiles[x][y].isSolid();
+	}
+
 	// Board implementation
 
 	private void loadMap(String path) {
