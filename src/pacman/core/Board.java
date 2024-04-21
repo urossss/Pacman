@@ -21,7 +21,7 @@ public class Board {
 	private Handler handler;
 	private EntityManager entityManager;
 
-	private int foodLeft;
+	private int foodLeft, foodEaten;
 
 	public Board(Handler handler) {
 		this(handler, DefaultMapPath);
@@ -99,6 +99,7 @@ public class Board {
 
 			 // reduce food counter and create the Fruit object if needed
 			this.foodLeft--;
+			this.foodEaten++;
 			// todo: create Fruits if enough food has been eaten
 		}
 	}
@@ -117,6 +118,7 @@ public class Board {
 
 		this.tiles = new Tile[this.width][this.height];
 		this.foodLeft = 0;
+		this.foodEaten = 0;
 
 		int tileType;
 		for (int y = 0; y < this.height; y++) {

@@ -19,4 +19,8 @@ public class EntityManager {
 	public void render(Graphics g) {
 		this.pacman.render(g);
 	}
+
+	public Pacman getPacman() {
+		return pacman;
+	}
 }

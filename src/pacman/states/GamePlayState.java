@@ -30,6 +30,10 @@ public class GamePlayState extends State {
 		}
 
 		this.handler.getBoard().update();
+
+		if (this.handler.getBoard().isCompleted()) {
+			this.handler.getStateManager().startLevelCompletedState();
+		}
 	}
 
 	@Override
