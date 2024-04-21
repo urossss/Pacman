@@ -11,7 +11,7 @@ public class StateManager {
 
 	protected State loadingState;
 	protected State menuState;
-	protected State gameState;
+	protected State gamePlayState;
 	protected State gameReadyState;
 
 	public StateManager(Handler handler) {
@@ -19,7 +19,7 @@ public class StateManager {
 
 		this.loadingState = new LoadingState(this.handler);
 		this.menuState = new MenuState(this.handler);
-		this.gameState = new GameState(this.handler);
+		this.gamePlayState = new GamePlayState(this.handler);
 		this.gameReadyState = new GameReadyState(this.handler);
 	}
 
@@ -49,8 +49,8 @@ public class StateManager {
 		this.gameReadyState.start();
 	}
 
-	public void startGameState() {
-		this.gameState.start();
+	public void startGamePlayState() {
+		this.gamePlayState.start();
 	}
 
 	// Implementation

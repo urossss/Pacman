@@ -4,9 +4,9 @@ import pacman.core.Handler;
 
 import java.awt.*;
 
-public class GameState extends State {
+public class GamePlayState extends State {
 
-	public GameState(Handler handler) {
+	public GamePlayState(Handler handler) {
 		super(handler);
 	}
 

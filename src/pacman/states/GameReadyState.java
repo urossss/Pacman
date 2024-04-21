@@ -44,7 +44,7 @@ public class GameReadyState extends State {
 		}
 
 		if (this.timer >= T2) {
-			this.handler.getStateManager().startGameState();
+			this.handler.getStateManager().startGamePlayState();
 		}
 	}
 
