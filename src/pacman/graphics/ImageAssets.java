@@ -9,7 +9,7 @@ public class ImageAssets {
 
 	private static final int DIGIT_SIZE = 9, LETTER_SIZE = 9, GHOST_SIZE = 16, PACMAN_SIZE = 16;
 
-	public static BufferedImage title;
+	public static BufferedImage title, ready, game_over;
 	public static BufferedImage[] digits, letters;
 	public static BufferedImage[][] ghost_up, ghost_down, ghost_left, ghost_right;
 	public static BufferedImage[] ghost_scared_1, ghost_scared_2, ghost_eaten;
@@ -21,6 +21,8 @@ public class ImageAssets {
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/res/textures/sheet.png"));
 
 		title = sheet.crop(0, 0, 182, 46);
+		ready = sheet.crop(0, 286, 44, 7);
+		game_over = sheet.crop(44, 286, 68, 7);
 
 		letters = loadArray(sheet, 0, 293, 26, LETTER_SIZE);
 		digits = loadArray(sheet, 0, 302, 10, DIGIT_SIZE);

@@ -231,4 +231,12 @@ public class Game implements Runnable {
 	public int getLivesLeft() {
 		return livesLeft;
 	}
+
+	public void increaseLivesLeft() {
+		livesLeft++;
+	}
+
+	public void decreaseLivesLeft() {
+		livesLeft--;
+	}
 }

@@ -40,7 +40,9 @@ public class Board {
 		this.entityManager.update();
 	}
 
-	public void render(Graphics g) {
+	public void render(Graphics g, boolean shouldRenderEntities) {
+		g.translate(0, 55);
+
 		// Background
 		g.drawImage(ImageAssets.map1, 0, 0, width * Tile.TILE_WIDTH, height * Tile.TILE_HEIGHT, null);
 
@@ -52,7 +54,11 @@ public class Board {
 		}
 
 		// Entities
-		this.entityManager.render(g);
+		if (shouldRenderEntities) {
+			this.entityManager.render(g);
+		}
+
+		g.translate(0, -55);
 	}
 
 	// Public interface
@@ -95,6 +101,10 @@ public class Board {
 			this.foodLeft--;
 			// todo: create Fruits if enough food has been eaten
 		}
+	}
+
+	public boolean isCompleted() {
+		return this.foodLeft == 0;
 	}
 
 	// Board implementation

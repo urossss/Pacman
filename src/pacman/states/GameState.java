@@ -22,8 +22,6 @@ public class GameState extends State {
 
 	@Override
 	public void renderImpl(Graphics g) {
-		g.translate(0, 55);
-		this.handler.getBoard().render(g);
-		g.translate(0, -55);
+		this.handler.getBoard().render(g, true);
 	}
 }
