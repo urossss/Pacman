@@ -11,16 +11,18 @@ public class StateManager {
 
 	protected State loadingState;
 	protected State menuState;
-	protected State gamePlayState;
 	protected State gameReadyState;
+	protected State gamePlayState;
+	protected State gamePausedState;
 
 	public StateManager(Handler handler) {
 		this.handler = handler;
 
 		this.loadingState = new LoadingState(this.handler);
 		this.menuState = new MenuState(this.handler);
-		this.gamePlayState = new GamePlayState(this.handler);
 		this.gameReadyState = new GameReadyState(this.handler);
+		this.gamePlayState = new GamePlayState(this.handler);
+		this.gamePausedState = new GamePausedState(this.handler);
 	}
 
 	// Game loop interface
@@ -51,6 +53,10 @@ public class StateManager {
 
 	public void startGamePlayState() {
 		this.gamePlayState.start();
+	}
+
+	public void startGamePausedState() {
+		this.gamePausedState.start();
 	}
 
 	// Implementation

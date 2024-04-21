@@ -17,6 +17,8 @@ public class KeyManager implements KeyListener {
 	public boolean[] letters;
 	public boolean[] digits;
 
+	public long lastSpacePressTime = 0, lastSpaceReleaseTime = 0;
+
 	public KeyManager() {
 		keys = new boolean[256];
 		letters = new boolean[26];
@@ -83,6 +85,10 @@ public class KeyManager implements KeyListener {
 		if (keyCode >= 0 && keyCode < 256) {
 			keys[e.getKeyCode()] = true;
 		}
+
+		if (keyCode == KeyEvent.VK_SPACE) {
+			this.lastSpacePressTime = System.currentTimeMillis();
+		}
 	}
 
 	@Override
@@ -90,6 +96,10 @@ public class KeyManager implements KeyListener {
 		int keyCode = e.getKeyCode();
 		if (keyCode >= 0 && keyCode < 256) {
 			keys[e.getKeyCode()] = false;
+		}
+
+		if (keyCode == KeyEvent.VK_SPACE) {
+			this.lastSpaceReleaseTime = System.currentTimeMillis();
 		}
 	}
 

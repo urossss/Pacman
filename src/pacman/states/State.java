@@ -14,6 +14,8 @@ public abstract class State {
 	protected boolean shouldDrawHighScore = true;
 	protected boolean shouldDrawLives = true;
 
+	protected long stateStartTime;
+
 	public State(Handler handler) {
 		this.handler = handler;
 	}
@@ -26,6 +28,7 @@ public abstract class State {
 	}
 
 	public void start() {
+		this.stateStartTime = System.currentTimeMillis();
 		startImpl();
 		this.handler.getStateManager().setCurrentState(this);
 	}
