@@ -2,6 +2,7 @@ package pacman.states;
 
 import pacman.core.Game;
 import pacman.core.Handler;
+import pacman.graphics.ImageAssets;
 import pacman.graphics.TextRenderer;
 
 import java.awt.*;
@@ -53,9 +54,11 @@ public abstract class State {
 
 		if (this.shouldDrawLives) {
 			g.translate(0, 496 + 55);
-			TextRenderer.drawText(g, "lives", 5, 5);
 
-			// todo: draw number of lives
+//			TextRenderer.drawText(g, "lives", 5, 5);
+			for (int i = 0; i < handler.getGame().getLivesLeft(); i++) {
+				g.drawImage(ImageAssets.pacman_left[1], 30 * i, 0, 30, 30, null);
+			}
 		}
 	}
 

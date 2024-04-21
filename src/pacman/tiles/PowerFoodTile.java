@@ -18,4 +18,9 @@ public class PowerFoodTile extends Tile {
 		return true;
 	}
 
+	@Override
+	public int getScore() {
+		return POWER_FOOD_SCORE;
+	}
+
 }

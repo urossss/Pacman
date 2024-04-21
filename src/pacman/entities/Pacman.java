@@ -39,7 +39,7 @@ public class Pacman extends Creature {
 	public void update() {
 		this.updateAnimations();
 		this.move();
-		// todo: eat
+		this.handler.getBoard().eatTile(this.getXTile(), this.getYTile());
 		// todo: check for collision with other entities
 	}
 

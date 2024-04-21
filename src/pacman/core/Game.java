@@ -19,18 +19,16 @@ public class Game implements Runnable {
 	private boolean running = false;
 	private Thread thread;
 
-	// Rendering
-	private BufferStrategy bs;
-	private Graphics g;
-
 	// Game handler
 	private Handler handler;
 	private StateManager stateManager;
 	private KeyManager keyManager;
 
 	// Game variables
-	private int score = 0, highScore = 0;
+	private int score = 0;
+	private int highScore = 0;
 	private String highScorePlayer = "test";
+	private int livesLeft;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -178,33 +176,45 @@ public class Game implements Runnable {
 
 	private void render() {
 		// Get Graphics object
-		this.bs = this.display.getCanvas().getBufferStrategy();
-		if (this.bs == null) { // calling this method for the first time
+		// Rendering
+		BufferStrategy bs = this.display.getCanvas().getBufferStrategy();
+		if (bs == null) { // calling this method for the first time
 			this.display.getCanvas().createBufferStrategy(3);
 			return;
 		}
-		this.g = this.bs.getDrawGraphics();
+		Graphics g = bs.getDrawGraphics();
 
 		// Clear the screen
-		this.g.setColor(Color.black);
-		this.g.fillRect(0, 0, this.width, this.height);
+		g.setColor(Color.black);
+		g.fillRect(0, 0, this.width, this.height);
 
 		// Draw game here
 //		this.board.render(g);
 		this.stateManager.render(g);
 
 		// End drawing
-		this.bs.show();
-		this.g.dispose();
+		bs.show();
+		g.dispose();
 	}
 
 	// Game logic
 
 	public void restartGame() {
-		// todo: reset lives and score counters
+		// todo: reset newRecord field
+		this.score = 0;
+		this.livesLeft = 3;
 
 		this.handler.setBoard(new Board(this.handler));
 	}
+
+	public void scorePoints(int points) {
+		if (this.score / 10000 != (this.score + points) / 10000) { // extra life for every 10,000 points scored
+			this.livesLeft++;
+		}
+		this.score += points;
+	}
+
+	// Getters
 
 	public int getScore() {
 		return score;
@@ -216,5 +226,9 @@ public class Game implements Runnable {
 
 	public String getHighScorePlayer() {
 		return highScorePlayer;
+	}
+
+	public int getLivesLeft() {
+		return livesLeft;
 	}
 }

@@ -18,4 +18,9 @@ public class FoodTile extends Tile {
 		return true;
 	}
 
+	@Override
+	public int getScore() {
+		return FOOD_SCORE;
+	}
+
 }

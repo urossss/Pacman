@@ -2,6 +2,7 @@ package pacman.core;
 
 import pacman.entities.EntityManager;
 import pacman.graphics.ImageAssets;
+import pacman.tiles.PowerFoodTile;
 import pacman.tiles.Tile;
 import pacman.tiles.TileManager;
 import pacman.utils.Utils;
@@ -18,8 +19,9 @@ public class Board {
 	private TileManager tileManager = new TileManager();
 
 	private Handler handler;
-
 	private EntityManager entityManager;
+
+	private int foodLeft;
 
 	public Board(Handler handler) {
 		this(handler, DefaultMapPath);
@@ -71,6 +73,30 @@ public class Board {
 		this.handler.setEntityManager(this.entityManager);
 	}
 
+	public void eatTile(int x, int y) {
+		if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
+			return;
+		}
+
+		if (this.tiles[x][y].isEatable()) {
+			// increase game score
+			int score = this.tiles[x][y].getScore();
+			this.handler.getGame().scorePoints(score);
+
+			// start ghosts vulnerable mode when power food is eaten
+			if (this.tiles[x][y] instanceof PowerFoodTile) {
+				// todo
+			}
+
+			// clear the tile
+			this.tiles[x][y] = this.tileManager.getTileByType(0); // empty tile
+
+			 // reduce food counter and create the Fruit object if needed
+			this.foodLeft--;
+			// todo: create Fruits if enough food has been eaten
+		}
+	}
+
 	// Board implementation
 
 	private void loadMap(String path) {
@@ -80,12 +106,16 @@ public class Board {
 		this.height = Utils.parseInt(tokens[1]);
 
 		this.tiles = new Tile[this.width][this.height];
+		this.foodLeft = 0;
 
 		int tileType;
 		for (int y = 0; y < this.height; y++) {
 			for (int x = 0; x < this.width; x++) {
 				tileType = Utils.parseInt(tokens[2 + (y * this.width + x)]);
 				this.tiles[x][y] = this.tileManager.getTileByType(tileType);
+				if (this.tiles[x][y].isEatable()) {
+					this.foodLeft++;
+				}
 			}
 		}
 	}
