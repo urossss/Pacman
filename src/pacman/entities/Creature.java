@@ -5,11 +5,11 @@ import pacman.tiles.Tile;
 
 public abstract class Creature extends Entity {
 
-	public static enum Direction {
+	public enum Direction {
 		UP, DOWN, LEFT, RIGHT
 	}
 
-	protected Direction currentDirection = null;
+	protected Direction currentDirection = Direction.RIGHT;
 
 	private double speed = 2.0;
 	private double xMove = 0.0, yMove = 0.0;
@@ -21,19 +21,39 @@ public abstract class Creature extends Entity {
 		super(handler, x, y);
 	}
 
+	public Creature(Handler handler, double x, double y, int width, int height) {
+		super(handler, x, y, width, height);
+	}
+
 	public abstract Direction calculateDesiredDirection();
 
 	public void move() {
+		// change the direction to the target (desired) direction if possible
 		Direction desiredDirection = this.calculateDesiredDirection();
 		this.changeDirectionIfPossible(desiredDirection);
 
+		// check if movement is possible
 		if (!this.canMoveWithoutTileCollision()) {
-			// todo: adjust to the edge of the tile
+			// since further movement is not possible, align the coordinates to the current tile borders
+			this.x = this.getXTile() * Tile.TILE_WIDTH;
+			this.y = this.getYTile() * Tile.TILE_HEIGHT;
+
+			// direction change is possible since there is no movement
+			this.currentDirection = desiredDirection;
+
 			return;
 		}
 
+		// actual movement (not that there will be non-zero movement only along 1 axis, not both)
 		this.x += this.xMove;
 		this.y += this.yMove;
+
+		// align the non-movement axis to the current tile borders
+		if (this.getDirectionAxis(this.currentDirection) == 'x') {
+			this.y = getYTile() * Tile.TILE_HEIGHT;
+		} else {
+			this.x = getXTile() * Tile.TILE_WIDTH;
+		}
 
 		// todo: check bounds on that map tunnel on yTile = 14
 	}
@@ -82,15 +102,21 @@ public abstract class Creature extends Entity {
 			return;
 		}
 
-		// direction change is only possible if the creature top left corner (x,y) is close to the tile top left corner
+		// same axis direction change is always possible
+		if (this.getDirectionAxis(this.currentDirection) == this.getDirectionAxis(desiredDirection)) {
+			this.currentDirection = desiredDirection;
+			return;
+		}
+
+		// different axis direction change is only possible if the creature's top left corner (x,y) is close to the tile's top left corner
 		if (Math.abs(this.x - this.xTileCurrent * Tile.TILE_WIDTH) + Math.abs(this.y - this.yTileCurrent * Tile.TILE_HEIGHT) <= speed) {
 			this.currentDirection = desiredDirection;
 		}
 	}
 
-	private boolean canMoveWithoutTileCollision() { // todo: think about renaming this
-		if (this.currentDirection == null) { // no movement, no collision
-			return true; // todo: rethink this
+	private boolean canMoveWithoutTileCollision() {
+		if (this.currentDirection == null) { // no movement means no collision, plus this should never be null
+			return true;
 		}
 
 		this.setMovesAndTiles(this.currentDirection);
@@ -104,14 +130,27 @@ public abstract class Creature extends Entity {
 		double xNext = this.x + this.xMove;
 		double yNext = this.y + this.yMove;
 
-		// movement within the current tile is possible, outside it is not possible
-		return xNext >= currentTileMinX
-				&& xNext < currentTileMinX + Tile.TILE_WIDTH
-				&& yNext >= currentTileMinY
-				&& yNext < currentTileMinY + Tile.TILE_HEIGHT;
+		// Movement within the current tile is possible, outside it is not possible.
+		// If the creature's top left corner (x,y) is not too close to the tile's top left corner (distance is larger
+		// than speed), then the movement is possible because it means that the movement within this tile has already
+		// started and it can continue until the creature's corner is aligned with the tile's corner.
+		// If the creatures's corner is aligned with the tile's corner (distance is less than or equal to speed),
+		// that means that the creature is perfectly aligned with current tile, and any new movement would move it
+		// towards the next tile, and movement to the next tile is not possible as checked above.
+		return Math.abs(xNext - currentTileMinX) + Math.abs(yNext - currentTileMinY) > speed;
 	}
 
 	private boolean canMoveToTile(int xTile, int yTile) {
 		return this.handler.getBoard().canMoveToTile(xTile, yTile);
+	}
+
+	private char getDirectionAxis(Direction direction) {
+		if (direction == Direction.UP || direction == Direction.DOWN) {
+			return 'y';
+		}
+		if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+			return 'x';
+		}
+		return '?';
 	}
 }

@@ -1,5 +1,7 @@
 package pacman.input;
 
+import pacman.entities.Creature.Direction;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Arrays;
@@ -8,7 +10,8 @@ public class KeyManager implements KeyListener {
 
 	private boolean[] keys;
 
-//	public Direction dir = Direction.RIGHT;
+	public Direction direction = Direction.RIGHT;
+
 	public boolean space = false, enter = false, backspace = false;
 	public boolean underscore = false, shift = false, minus = false; // works for US keyboard
 	public boolean[] letters;
@@ -21,15 +24,15 @@ public class KeyManager implements KeyListener {
 	}
 
 	public void update() {
-//		if (keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]) {
-//			dir = Direction.UP;
-//		} else if (keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]) {
-//			dir = Direction.DOWN;
-//		} else if (keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]) {
-//			dir = Direction.LEFT;
-//		} else if (keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]) {
-//			dir = Direction.RIGHT;
-//		}
+		if (keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]) {
+			direction = Direction.UP;
+		} else if (keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]) {
+			direction = Direction.DOWN;
+		} else if (keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]) {
+			direction = Direction.LEFT;
+		} else if (keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]) {
+			direction = Direction.RIGHT;
+		}
 
 		space = keys[KeyEvent.VK_SPACE];
 		enter = keys[KeyEvent.VK_ENTER];

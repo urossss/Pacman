@@ -7,13 +7,13 @@ import java.awt.image.BufferedImage;
 
 public class ImageAssets {
 
-	private static final int DIGIT_SIZE = 9, LETTER_SIZE = 9, GHOST_SIZE = 16, PLAYER_SIZE = 16;
+	private static final int DIGIT_SIZE = 9, LETTER_SIZE = 9, GHOST_SIZE = 16, PACMAN_SIZE = 16;
 
 	public static BufferedImage title;
 	public static BufferedImage[] digits, letters;
 	public static BufferedImage[][] ghost_up, ghost_down, ghost_left, ghost_right;
 	public static BufferedImage[] ghost_scared_1, ghost_scared_2, ghost_eaten;
-	public static BufferedImage[] player_up, player_down, player_left, player_right, player_eaten;
+	public static BufferedImage[] pacman_up, pacman_down, pacman_left, pacman_right, pacman_eaten;
 	public static BufferedImage map1, map2, food, powerFood;
 	public static BufferedImage underscore;
 
@@ -50,11 +50,11 @@ public class ImageAssets {
 		ghost_scared_2 = loadArray(sheet, GHOST_SIZE * 2, 124 + GHOST_SIZE * 4, 2, GHOST_SIZE);
 		ghost_eaten = loadArray(sheet, GHOST_SIZE * 4, 124 + GHOST_SIZE * 4, 4, GHOST_SIZE);
 
-		player_eaten = loadArray(sheet, 0, 258, 16, PLAYER_SIZE);
-		player_right = loadArray(sheet, 0, 89, 4, PLAYER_SIZE);
-		player_left = loadArray(sheet, 0, 105, 4, PLAYER_SIZE);
-		player_up = loadArray(sheet, 64, 89, 4, PLAYER_SIZE);
-		player_down = loadArray(sheet, 64, 105, 4, PLAYER_SIZE);
+		pacman_eaten = loadArray(sheet, 0, 258, 16, PACMAN_SIZE);
+		pacman_right = loadArray(sheet, 0, 89, 4, PACMAN_SIZE);
+		pacman_left = loadArray(sheet, 0, 105, 4, PACMAN_SIZE);
+		pacman_up = loadArray(sheet, 64, 89, 4, PACMAN_SIZE);
+		pacman_down = loadArray(sheet, 64, 105, 4, PACMAN_SIZE);
 
 		map1 = sheet.crop(202, 0, 224, 248);
 		map2 = sheet.crop(432, 0, 224, 248);

@@ -1,5 +1,6 @@
 package pacman.core;
 
+import pacman.entities.EntityManager;
 import pacman.graphics.ImageAssets;
 import pacman.tiles.Tile;
 import pacman.tiles.TileManager;
@@ -16,18 +17,25 @@ public class Board {
 
 	private TileManager tileManager = new TileManager();
 
-	public Board() {
-		this(DefaultMapPath);
+	private Handler handler;
+
+	private EntityManager entityManager;
+
+	public Board(Handler handler) {
+		this(handler, DefaultMapPath);
 	}
 
-	public Board(String mapPath) {
+	public Board(Handler handler, String mapPath) {
+		this.handler = handler;
 		this.loadMap(mapPath);
+
+		this.recreateEntities();
 	}
 
 	// Game loop interface
 
 	public void update() {
-
+		this.entityManager.update();
 	}
 
 	public void render(Graphics g) {
@@ -40,6 +48,9 @@ public class Board {
 				this.tiles[x][y].render(g, x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
 			}
 		}
+
+		// Entities
+		this.entityManager.render(g);
 	}
 
 	// Public interface
@@ -53,6 +64,11 @@ public class Board {
 		}
 
 		return !this.tiles[x][y].isSolid();
+	}
+
+	public void recreateEntities() {
+		this.entityManager = new EntityManager(this.handler);
+		this.handler.setEntityManager(this.entityManager);
 	}
 
 	// Board implementation

@@ -49,13 +49,13 @@ public class MenuState extends State {
 		this.xAnim = -300;
 
 		this.chaseAnimationLeft = new Animation[5];
-		this.chaseAnimationLeft[0] = new Animation(50, ImageAssets.player_left);
+		this.chaseAnimationLeft[0] = new Animation(50, ImageAssets.pacman_left);
 		for (int i = 1; i <= 4; i++) {
 			this.chaseAnimationLeft[i] = new Animation(50, ImageAssets.ghost_left[i - 1]);
 		}
 
 		this.chaseAnimationRight = new Animation[5];
-		this.chaseAnimationRight[0] = new Animation(50, ImageAssets.player_right);
+		this.chaseAnimationRight[0] = new Animation(50, ImageAssets.pacman_right);
 		for (int i = 1; i <= 4; i++) {
 			this.chaseAnimationRight[i] = new Animation(50, ImageAssets.ghost_scared_1);
 		}

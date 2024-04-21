@@ -203,7 +203,7 @@ public class Game implements Runnable {
 	public void restartGame() {
 		// todo: reset lives and score counters
 
-		this.handler.setBoard(new Board());
+		this.handler.setBoard(new Board(this.handler));
 	}
 
 	public int getScore() {
