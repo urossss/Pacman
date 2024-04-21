@@ -1,7 +1,6 @@
 package pacman.states;
 
 import pacman.core.Handler;
-import pacman.graphics.ImageAssets;
 import pacman.graphics.TextRenderer;
 
 import java.awt.*;
