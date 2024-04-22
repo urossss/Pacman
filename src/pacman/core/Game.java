@@ -26,7 +26,7 @@ public class Game implements Runnable {
 
 	// Game variables
 	private int score = 0;
-	private int highScore = 100;
+	private int highScore = 200;
 	private String highScorePlayer = "test";
 	private int livesLeft;
 	private boolean isNewHighScore = false;
@@ -201,7 +201,6 @@ public class Game implements Runnable {
 	// Game logic
 
 	public void restartGame() {
-		// todo: reset newRecord field
 		this.score = 0;
 		this.livesLeft = 3;
 		this.isNewHighScore = false;

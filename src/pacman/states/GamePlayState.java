@@ -33,6 +33,11 @@ public class GamePlayState extends State {
 
 		if (this.handler.getBoard().isCompleted()) {
 			this.handler.getStateManager().startLevelCompletedState();
+			return;
+		}
+
+		if (this.handler.getEntityManager().getPacman().getYTile() == 18) { // todo: fix this test condition
+			this.handler.getStateManager().startGameOverState();
 		}
 	}
 
