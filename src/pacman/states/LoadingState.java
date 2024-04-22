@@ -16,7 +16,7 @@ public class LoadingState extends State {
 	}
 
 	@Override
-	public void update() {
+	public void updateImpl() {
 
 	}
 

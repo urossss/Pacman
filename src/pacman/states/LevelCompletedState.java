@@ -32,7 +32,7 @@ public class LevelCompletedState extends State {
 	}
 
 	@Override
-	public void update() {
+	public void updateImpl() {
 		this.mapAnimation.update();
 
 		long currentTime = System.currentTimeMillis();

@@ -33,7 +33,7 @@ public class GameReadyState extends State {
 	}
 
 	@Override
-	public void update() {
+	public void updateImpl() {
 		long currentTime = System.currentTimeMillis();
 		this.timer += currentTime - this.previousTime;
 		this.previousTime = currentTime;

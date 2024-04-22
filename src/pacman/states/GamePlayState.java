@@ -18,7 +18,7 @@ public class GamePlayState extends State {
 	}
 
 	@Override
-	public void update() {
+	public void updateImpl() {
 		// Pause the game if space key was pressed, but:
 		// - ignore presses in first 0.5 seconds after starting this state
 		// - only react once to key holds

@@ -26,9 +26,10 @@ public class Game implements Runnable {
 
 	// Game variables
 	private int score = 0;
-	private int highScore = 0;
+	private int highScore = 100;
 	private String highScorePlayer = "test";
 	private int livesLeft;
+	private boolean isNewHighScore = false;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -203,6 +204,7 @@ public class Game implements Runnable {
 		// todo: reset newRecord field
 		this.score = 0;
 		this.livesLeft = 3;
+		this.isNewHighScore = false;
 
 		this.handler.setBoard(new Board(this.handler));
 	}
@@ -212,6 +214,23 @@ public class Game implements Runnable {
 			this.livesLeft++;
 		}
 		this.score += points;
+
+		if (this.score > this.highScore) {
+			this.isNewHighScore = true;
+			this.highScore = this.score;
+		}
+	}
+
+	public void increaseLivesLeft() {
+		livesLeft++;
+	}
+
+	public void decreaseLivesLeft() {
+		livesLeft--;
+	}
+
+	public boolean isNewHighScore() {
+		return this.isNewHighScore;
 	}
 
 	// Getters
@@ -230,13 +249,5 @@ public class Game implements Runnable {
 
 	public int getLivesLeft() {
 		return livesLeft;
-	}
-
-	public void increaseLivesLeft() {
-		livesLeft++;
-	}
-
-	public void decreaseLivesLeft() {
-		livesLeft--;
 	}
 }
