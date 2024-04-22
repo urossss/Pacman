@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class GamePlayState extends State {
 
-	private int startCounter = 0;
+	private boolean isGameResumed;
 
 	public GamePlayState(Handler handler) {
 		super(handler);
@@ -14,7 +14,7 @@ public class GamePlayState extends State {
 
 	@Override
 	public void startImpl() {
-		this.startCounter++;
+		this.isGameResumed = false;
 	}
 
 	@Override
@@ -24,8 +24,9 @@ public class GamePlayState extends State {
 		// - only react once to key holds
 		if (this.handler.getKeyManager().space
 				&& (this.handler.getKeyManager().lastSpacePressTime - this.stateStartTime > 500)
-				&& ((this.handler.getKeyManager().lastSpaceReleaseTime > this.stateStartTime) || startCounter == 1)) {
+				&& ((this.handler.getKeyManager().lastSpaceReleaseTime > this.stateStartTime) || !this.isGameResumed)) {
 			this.handler.getStateManager().startGamePausedState();
+			System.out.println("PAUSE " + this.isGameResumed);
 			return;
 		}
 
@@ -37,12 +38,16 @@ public class GamePlayState extends State {
 		}
 
 		if (this.handler.getEntityManager().getPacman().getYTile() == 18) { // todo: fix this test condition
-			this.handler.getStateManager().startGameOverState();
+			this.handler.getStateManager().startPacmanDiedState();
 		}
 	}
 
 	@Override
 	public void renderImpl(Graphics g) {
 		this.handler.getBoard().render(g, true);
+	}
+
+	public void setResumeStatus(boolean isResumed) {
+		this.isGameResumed = isResumed;
 	}
 }

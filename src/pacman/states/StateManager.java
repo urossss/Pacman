@@ -12,10 +12,11 @@ public class StateManager {
 	protected State loadingState;
 	protected State menuState;
 	protected State gameReadyState;
-	protected State gamePlayState;
+	protected GamePlayState gamePlayState;
 	protected State gamePausedState;
 	protected State levelCompletedState;
 	protected State gameOverState;
+	protected State pacmanDiedState;
 
 	public StateManager(Handler handler) {
 		this.handler = handler;
@@ -27,6 +28,7 @@ public class StateManager {
 		this.gamePausedState = new GamePausedState(this.handler);
 		this.levelCompletedState = new LevelCompletedState(this.handler);
 		this.gameOverState = new GameOverState(this.handler);
+		this.pacmanDiedState = new PacmanDiedState(this.handler);
 	}
 
 	// Game loop interface
@@ -69,6 +71,15 @@ public class StateManager {
 
 	public void startGameOverState() {
 		this.gameOverState.start();
+	}
+
+	public void startPacmanDiedState() {
+		this.pacmanDiedState.start();
+	}
+
+	public void resumeGamePlayState() {
+		this.gamePlayState.start();
+		this.gamePlayState.setResumeStatus(true);
 	}
 
 	// Implementation

@@ -40,4 +40,12 @@ public abstract class Entity {
 	public int getYTile() {
 		return (int) Math.round(this.y / Tile.TILE_HEIGHT);
 	}
+
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
 }

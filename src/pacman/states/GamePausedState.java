@@ -24,7 +24,7 @@ public class GamePausedState extends State {
 		if (this.handler.getKeyManager().space
 				&& (this.handler.getKeyManager().lastSpacePressTime - this.stateStartTime > 500)
 				&& (this.handler.getKeyManager().lastSpaceReleaseTime > this.stateStartTime)) {
-			this.handler.getStateManager().startGamePlayState();
+			this.handler.getStateManager().resumeGamePlayState();
 			return;
 		}
 
