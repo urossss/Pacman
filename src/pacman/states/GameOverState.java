@@ -30,7 +30,7 @@ public class GameOverState extends State {
 
 		if (this.timer >= T) {
 			if (this.handler.getGame().isNewHighScore()) {
-//				this.handler.getGame().startNewRecordState(); // todo
+				this.handler.getStateManager().startNewRecordState();
 			} else {
 				this.handler.getStateManager().startMenuState();
 			}

@@ -17,6 +17,7 @@ public class StateManager {
 	protected State levelCompletedState;
 	protected State gameOverState;
 	protected State pacmanDiedState;
+	protected State newRecordState;
 
 	public StateManager(Handler handler) {
 		this.handler = handler;
@@ -29,6 +30,7 @@ public class StateManager {
 		this.levelCompletedState = new LevelCompletedState(this.handler);
 		this.gameOverState = new GameOverState(this.handler);
 		this.pacmanDiedState = new PacmanDiedState(this.handler);
+		this.newRecordState = new NewRecordState(this.handler);
 	}
 
 	// Game loop interface
@@ -75,6 +77,10 @@ public class StateManager {
 
 	public void startPacmanDiedState() {
 		this.pacmanDiedState.start();
+	}
+
+	public void startNewRecordState() {
+		this.newRecordState.start();
 	}
 
 	public void resumeGamePlayState() {
