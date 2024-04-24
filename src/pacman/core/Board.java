@@ -41,7 +41,7 @@ public class Board {
 	}
 
 	public void render(Graphics g, boolean shouldRenderEntities) {
-		g.translate(0, 55);
+		g.translate(0, Game.GAME_TOP_SECTION_HEIGHT_PIXELS);
 
 		// Background
 		g.drawImage(ImageAssets.map1, 0, 0, width * Tile.TILE_WIDTH, height * Tile.TILE_HEIGHT, null);
@@ -58,7 +58,7 @@ public class Board {
 			this.entityManager.render(g);
 		}
 
-		g.translate(0, -55);
+		g.translate(0, -Game.GAME_TOP_SECTION_HEIGHT_PIXELS);
 	}
 
 	// Public interface

@@ -1,5 +1,6 @@
 package pacman.states;
 
+import pacman.core.Game;
 import pacman.core.Handler;
 import pacman.graphics.Animation;
 import pacman.graphics.ImageAssets;
@@ -51,14 +52,14 @@ public class LevelCompletedState extends State {
 
 	@Override
 	public void renderImpl(Graphics g) {
-		g.translate(0, 55);
+		g.translate(0, Game.GAME_TOP_SECTION_HEIGHT_PIXELS);
 
-		g.drawImage(this.mapAnimation.getCurrentFrame(), 0, 0, 448, 496, null);
+		g.drawImage(this.mapAnimation.getCurrentFrame(), 0, 0, Game.GAME_BOARD_WIDTH_PIXELS, Game.GAME_BOARD_HEIGHT_PIXELS, null);
 
 		if (!this.livesIncreased) {
 			handler.getEntityManager().getPacman().render(g);
 		}
 
-		g.translate(0, -55);
+		g.translate(0, -Game.GAME_TOP_SECTION_HEIGHT_PIXELS);
 	}
 }

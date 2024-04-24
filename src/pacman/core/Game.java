@@ -14,12 +14,17 @@ import java.io.IOException;
 
 public class Game implements Runnable {
 
+	public static final String GAME_TITLE = "Pacman";
+	public static final int GAME_BOARD_WIDTH_PIXELS = 448;
+	public static final int GAME_BOARD_HEIGHT_PIXELS = 496;
+	public static final int GAME_TOP_SECTION_HEIGHT_PIXELS = 55;
+	public static final int GAME_BOTTOM_SECTION_HEIGHT_PIXELS = 30;
+	public static final int GAME_FULL_HEIGHT_PIXELS = GAME_BOARD_HEIGHT_PIXELS + GAME_TOP_SECTION_HEIGHT_PIXELS + GAME_BOTTOM_SECTION_HEIGHT_PIXELS;
+
 	private final String SCORE_FILE_PATH = "./score.txt";
 
 	// Display
 	private Display display;
-	private String title;
-	private int width, height;
 
 	// Game loop
 	private boolean running = false;
@@ -37,10 +42,8 @@ public class Game implements Runnable {
 	private int livesLeft;
 	private boolean isNewHighScore = false;
 
-	public Game(String title, int width, int height) {
-		this.title = title;
-		this.width = width;
-		this.height = height;
+	public Game() {
+
 	}
 
 	// Game loop skeleton
@@ -145,7 +148,7 @@ public class Game implements Runnable {
 
 	private void init() {
 		// Display
-		this.display = new Display(title, width, height);
+		this.display = new Display(GAME_TITLE, GAME_BOARD_WIDTH_PIXELS, GAME_FULL_HEIGHT_PIXELS);
 
 		// Handler
 		this.handler = new Handler(this);
@@ -183,7 +186,7 @@ public class Game implements Runnable {
 
 		// Clear the screen
 		g.setColor(Color.black);
-		g.fillRect(0, 0, this.width, this.height);
+		g.fillRect(0, 0, GAME_BOARD_WIDTH_PIXELS, GAME_FULL_HEIGHT_PIXELS);
 
 		// Draw game here
 //		this.board.render(g);

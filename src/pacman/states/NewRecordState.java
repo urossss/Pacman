@@ -1,5 +1,6 @@
 package pacman.states;
 
+import pacman.core.Game;
 import pacman.core.Handler;
 import pacman.graphics.TextRenderer;
 
@@ -101,7 +102,7 @@ public class NewRecordState extends State {
 
 		if (this.typingEnabled) {
 			if (this.typingVisible) {
-				TextRenderer.drawText(g, "type your name", 448 / 2 - 14 * 16 / 2, 250, 16);
+				TextRenderer.drawText(g, "type your name", Game.GAME_BOARD_WIDTH_PIXELS / 2 - 14 * 16 / 2, 250, 16);
 			}
 
 			if (this.nameRuleVisible) {
@@ -112,7 +113,7 @@ public class NewRecordState extends State {
 
 			String currentName = this.getName();
 			currentName += this.typingVisible ? '_' : ' ';
-			int x = (448 - currentName.length() * 20) / 2;
+			int x = (Game.GAME_BOARD_WIDTH_PIXELS - currentName.length() * 20) / 2;
 			TextRenderer.drawText(g, currentName, x, 280, 20);
 		}
 	}

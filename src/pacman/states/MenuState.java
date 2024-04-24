@@ -1,5 +1,6 @@
 package pacman.states;
 
+import pacman.core.Game;
 import pacman.core.Handler;
 import pacman.graphics.Animation;
 import pacman.graphics.ImageAssets;
@@ -18,7 +19,8 @@ public class MenuState extends State {
 	private final double a = 0.01; // title animation acceleration (deceleration)
 
 	private boolean pressSpaceVisible;
-	private long currentTime, previousTime, delta;
+	private long previousTime;
+	private long delta;
 
 	private Animation[] chaseAnimationLeft, chaseAnimationRight;
 	private boolean chaseGoingRight;
@@ -26,7 +28,7 @@ public class MenuState extends State {
 	private int xAnim; // chase animation coordinates (top left corner)
 	private final int yAnim = 380; // y coordinate is constant for this animation
 	private final int xAnimMin = -300; // animation width is 200 pixels (5 images, 40 pixels each); the limit is 100 pixels off the edge
-	private final int xAnimMax = 448 + 100; // the limit is 100 pixels off the edge on this side as well, 448 is display width
+	private final int xAnimMax = Game.GAME_BOARD_WIDTH_PIXELS + 100; // the limit is 100 pixels off the edge on this side as well, 448 is display width
 
 	public MenuState(Handler handler) {
 		super(handler, false, true, false);
@@ -68,9 +70,9 @@ public class MenuState extends State {
 			return;
 		}
 
-		this.currentTime = System.currentTimeMillis();
-		this.delta = (this.delta + this.currentTime - this.previousTime) % 400;
-		this.previousTime = this.currentTime;
+		long currentTime = System.currentTimeMillis();
+		this.delta = (this.delta + currentTime - this.previousTime) % 400;
+		this.previousTime = currentTime;
 
 		if (!this.titleLoaded) {
 			// title animation

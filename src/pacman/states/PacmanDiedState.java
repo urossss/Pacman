@@ -1,5 +1,6 @@
 package pacman.states;
 
+import pacman.core.Game;
 import pacman.core.Handler;
 import pacman.graphics.Animation;
 import pacman.graphics.ImageAssets;
@@ -52,9 +53,11 @@ public class PacmanDiedState extends State {
 	public void renderImpl(Graphics g) {
 		this.handler.getBoard().render(g, false);
 
+		g.translate(0, Game.GAME_TOP_SECTION_HEIGHT_PIXELS);
 		g.drawImage(this.pacmanDiedAnimation.getCurrentFrame(),
 				(int) this.handler.getEntityManager().getPacman().getX() - 8,
-				(int) this.handler.getEntityManager().getPacman().getY() - 8 + 55,
+				(int) this.handler.getEntityManager().getPacman().getY() - 8,
 				32, 32, null);
+		g.translate(0, -Game.GAME_TOP_SECTION_HEIGHT_PIXELS);
 	}
 }
