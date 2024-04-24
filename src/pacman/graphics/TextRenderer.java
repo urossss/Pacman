@@ -72,6 +72,10 @@ public class TextRenderer {
 
 	// Draws correctly numbers from 0 to 999999
 	public static void drawInteger(Graphics g, int num, int x, int y, int digitWidth, int digitHeight, int horizontalSpacing) {
+		if (num < 0) {
+			return;
+		}
+
 		String text = Integer.toString(num);
 		if (text.length() < 6) {
 			text = "000000" + text;

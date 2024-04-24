@@ -1,9 +1,6 @@
 package pacman.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class Utils {
 
@@ -11,21 +8,15 @@ public class Utils {
 		StringBuilder builder = new StringBuilder();
 
 		try {
-			InputStream inputStream = Utils.class.getResourceAsStream(path);
-			if (inputStream == null) { // invalid file path
-				return null;
-			}
-
-			InputStreamReader inputReader = new InputStreamReader(inputStream);
-			BufferedReader br = new BufferedReader(inputReader);
+			BufferedReader br = new BufferedReader(new FileReader(path));
 
 			String line;
 			while ((line = br.readLine()) != null) {
 				builder.append(line).append('\n');
 			}
 			br.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+//			e.printStackTrace();
 			return null;
 		}
 

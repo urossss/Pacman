@@ -4,11 +4,17 @@ import pacman.display.Display;
 import pacman.graphics.ImageAssets;
 import pacman.input.KeyManager;
 import pacman.states.StateManager;
+import pacman.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Game implements Runnable {
+
+	private final String SCORE_FILE_PATH = "./score.txt";
 
 	// Display
 	private Display display;
@@ -25,9 +31,9 @@ public class Game implements Runnable {
 	private KeyManager keyManager;
 
 	// Game variables
-	private int score = 0;
-	private int highScore = 200;
-	private String highScorePlayer = "test";
+	private int score;
+	private int highScore;
+	private String highScorePlayer;
 	private int livesLeft;
 	private boolean isNewHighScore = false;
 
@@ -155,19 +161,9 @@ public class Game implements Runnable {
 
 		// Asynchronously load assets and start the game
 		new Thread(() -> {
-			// Assets
 			ImageAssets.init();
-
 			this.stateManager.startMenuState();
 		}).start();
-
-//		menuState = new MenuState(handler);
-//		readyState = new ReadyState(handler);
-//		gameState = new GameState(handler);
-//		levelCompletedState = new LevelCompletedState(handler);
-//		pacmanDiedState = new PacmanDiedState(handler);
-//		gameOverState = new GameOverState(handler);
-//		newRecordState = new NewRecordState(handler);
 	}
 
 	private void update() {
@@ -205,6 +201,8 @@ public class Game implements Runnable {
 		this.livesLeft = 3;
 		this.isNewHighScore = false;
 
+		this.readHighScore();
+
 		this.handler.setBoard(new Board(this.handler));
 	}
 
@@ -232,6 +230,17 @@ public class Game implements Runnable {
 		return this.isNewHighScore;
 	}
 
+	public void saveNewHighScore(String playerName) {
+		if (this.score < this.highScore) {
+			return;
+		}
+
+		this.highScore = this.score;
+		this.highScorePlayer = playerName;
+
+		this.writeHighScore();
+	}
+
 	// Getters
 
 	public int getScore() {
@@ -249,4 +258,32 @@ public class Game implements Runnable {
 	public int getLivesLeft() {
 		return livesLeft;
 	}
+
+	// Private implementation
+
+	// Reads high score and high score player name from score.txt if the file exists and if it has the right format
+	private void readHighScore() {
+		try {
+			String file = Utils.loadFileAsString(this.SCORE_FILE_PATH);
+			String[] tokens = file.split("\\s+");
+			this.highScore = Utils.parseInt(tokens[0]);
+			this.highScorePlayer = tokens[1];
+		} catch (Exception e) {
+			this.highScore = 0;
+			this.highScorePlayer = "";
+		}
+	}
+
+	// Writes new high score to score.txt (overwrites it if needed, only 1 score is remembered)
+	private void writeHighScore() {
+		File file = new File(this.SCORE_FILE_PATH);
+		try {
+			FileWriter f = new FileWriter(file, false); // not appending to the file means overwriting if it exists
+			f.write(this.highScore + " " + this.highScorePlayer);
+			f.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

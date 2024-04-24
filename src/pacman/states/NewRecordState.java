@@ -83,8 +83,7 @@ public class NewRecordState extends State {
 
 			if (this.handler.getKeyManager().enter) {
 				if (this.isNameValid()) {
-					// todo: set new high score in the Game (and write to file...)
-					System.out.println(this.getName());
+					this.handler.getGame().saveNewHighScore(this.getName());
 					this.handler.getStateManager().startMenuState();
 				} else {
 					this.nameRuleVisible = true;
