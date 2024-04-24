@@ -1,5 +1,7 @@
 package pacman.graphics;
 
+import pacman.core.Game;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -11,7 +13,7 @@ public class TextRenderer {
 			DEFAULT_DIGIT_WIDTH = 20,
 			DEFAULT_DIGIT_HEIGHT = 20,
 			DEFAULT_HORIZONTAL_SPACING = 0,
-			DEFAULT_VERTICAL_SPACING = 0;
+			DEFAULT_VERTICAL_SPACING = 2;
 
 	public static void drawText(Graphics g, String text, int x, int y) {
 		drawText(g, text, x, y, DEFAULT_CHAR_WIDTH, DEFAULT_CHAR_HEIGHT, DEFAULT_HORIZONTAL_SPACING, DEFAULT_VERTICAL_SPACING);
@@ -59,6 +61,28 @@ public class TextRenderer {
 
 			g.drawImage(image, dx + x, dy + y, charWidth, charHeight, null);
 			dx += charWidth + horizontalSpacing;
+		}
+	}
+
+	public static void drawTextCenterAligned(Graphics g, String text, int y, int charSize) {
+		drawTextCenterAligned(g, text, Game.GAME_BOARD_WIDTH_PIXELS, y, charSize, charSize, DEFAULT_HORIZONTAL_SPACING, DEFAULT_VERTICAL_SPACING);
+	}
+
+	public static void drawTextCenterAligned(
+			Graphics g,
+			String text,
+			int displayWidth,
+			int y,
+			int charWidth,
+			int charHeight,
+			int horizontalSpacing,
+			int verticalSpacing
+	) {
+		String[] rows = text.split("\\n");
+
+		for (int i = 0; i < rows.length; i++) {
+			int x = Math.max(0, (displayWidth - rows[i].length() * charWidth) / 2);
+			drawText(g, rows[i], x, y + (charHeight + verticalSpacing)* i, charWidth, charHeight, horizontalSpacing, verticalSpacing);
 		}
 	}
 

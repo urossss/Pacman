@@ -110,7 +110,7 @@ public class MenuState extends State {
 		g.drawImage(ImageAssets.title, xTitle, yTitle, 350, 90, null);
 
 		if (this.pressSpaceVisible) {
-			TextRenderer.drawText(g, "press space to start", 68, 310, 16);
+			TextRenderer.drawTextCenterAligned(g, "press space to start", 310, 16);
 			this.pressSpaceVisible = false;
 		}
 
@@ -124,7 +124,7 @@ public class MenuState extends State {
 			g.drawImage(image, this.xAnim + i * 40, this.yAnim, 40, 40, null);
 		}
 
-		TextRenderer.drawText(g, "original game by namco 1980", 8, 490, 16);
-		TextRenderer.drawText(g, "remastered by uros 2024", 40, 515, 16);
+		TextRenderer.drawTextCenterAligned(g, "original game by namco 1980", 490, 16);
+		TextRenderer.drawTextCenterAligned(g, "remastered by uros 2024", 515, 16);
 	}
 }

@@ -34,6 +34,6 @@ public class GamePausedState extends State {
 	@Override
 	public void renderImpl(Graphics g) {
 		this.handler.getBoard().render(g, true);
-		TextRenderer.drawText(g, "paused", 179, 327, 15);
+		TextRenderer.drawTextCenterAligned(g, "paused", 327, 15);
 	}
 }

@@ -97,24 +97,21 @@ public class NewRecordState extends State {
 	@Override
 	public void renderImpl(Graphics g) {
 		if (this.newRecordVisible) {
-			TextRenderer.drawText(g, "new record", 50, 180, 35);
+			TextRenderer.drawTextCenterAligned(g, "new record", 180, 35);
 		}
 
 		if (this.typingEnabled) {
 			if (this.typingVisible) {
-				TextRenderer.drawText(g, "type your name", Game.GAME_BOARD_WIDTH_PIXELS / 2 - 14 * 16 / 2, 250, 16);
+				TextRenderer.drawTextCenterAligned(g, "type your name", 250, 16);
 			}
 
 			if (this.nameRuleVisible) {
-				g.setColor(Color.red);
-				TextRenderer.drawText(g, "name must be between 3 and 8 characters long", 26, 510, 9);
-				TextRenderer.drawText(g, "and cannot start with a digit", 94, 522, 9);
+				TextRenderer.drawTextCenterAligned(g, "name must be between 3 and 8 characters long\nand cannot start with a digit", 510, 9);
 			}
 
 			String currentName = this.getName();
 			currentName += this.typingVisible ? '_' : ' ';
-			int x = (Game.GAME_BOARD_WIDTH_PIXELS - currentName.length() * 20) / 2;
-			TextRenderer.drawText(g, currentName, x, 280, 20);
+			TextRenderer.drawTextCenterAligned(g, currentName, 280, 20);
 		}
 	}
 
