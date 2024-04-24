@@ -1,7 +1,9 @@
 package pacman.core;
 
+import pacman.entities.Creature.Direction;
 import pacman.entities.EntityManager;
 import pacman.graphics.ImageAssets;
+import pacman.tiles.Coordinates;
 import pacman.tiles.PowerFoodTile;
 import pacman.tiles.Tile;
 import pacman.tiles.TileManager;
@@ -63,15 +65,47 @@ public class Board {
 
 	// Public interface
 
-	public boolean canMoveToTile(int x, int y) {
-		if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
-//			if (y == 14) {
-//				return Tile.emptyTile;
-//			}
-			return false;
+	public Coordinates getAdjacentTileCoordinates(int x, int y, Direction direction) {
+		int xTarget = x;
+		int yTarget = y;
+
+		if (direction != null) {
+			switch (direction) {
+				case UP:
+					yTarget--;
+					break;
+				case DOWN:
+					yTarget++;
+					break;
+				case LEFT:
+					xTarget--;
+					break;
+				case RIGHT:
+					xTarget++;
+					break;
+			}
 		}
 
-		return !this.tiles[x][y].isSolid();
+		if (xTarget < 0 || yTarget < 0 || xTarget >= this.width || yTarget >= this.height) {
+			while (xTarget < 0) {
+				xTarget += this.width;
+			}
+			while (xTarget >= this.width) {
+				xTarget -= this.width;
+			}
+			while (yTarget < 0) {
+				yTarget += this.height;
+			}
+			while (yTarget >= this.height) {
+				yTarget -= this.height;
+			}
+		}
+
+		if (this.tiles[xTarget][yTarget].isSolid()) {
+			return null;
+		}
+
+		return new Coordinates(xTarget, yTarget);
 	}
 
 	public void recreateEntities() {

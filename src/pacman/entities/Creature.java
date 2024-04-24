@@ -1,6 +1,8 @@
 package pacman.entities;
 
+import pacman.core.Game;
 import pacman.core.Handler;
+import pacman.tiles.Coordinates;
 import pacman.tiles.Tile;
 
 public abstract class Creature extends Entity {
@@ -15,7 +17,6 @@ public abstract class Creature extends Entity {
 	private double xMove = 0.0, yMove = 0.0;
 
 	private int xTileCurrent, yTileCurrent; // current tile
-	private int xTileNext, yTileNext; // next tile (tile where the creature is moving to, e.g. if the direction is UP, this will be the tile above the current one)
 
 	public Creature(Handler handler, double x, double y) {
 		super(handler, x, y);
@@ -34,7 +35,7 @@ public abstract class Creature extends Entity {
 
 		// check if movement is possible
 		if (!this.canMoveWithoutTileCollision()) {
-			// since further movement is not possible, align the coordinates to the current tile borders
+			// since further movement is not possible, align the coordinates with the current tile's borders
 			this.x = this.getXTile() * Tile.TILE_WIDTH;
 			this.y = this.getYTile() * Tile.TILE_HEIGHT;
 
@@ -55,7 +56,20 @@ public abstract class Creature extends Entity {
 			this.x = getXTile() * Tile.TILE_WIDTH;
 		}
 
-		// todo: check bounds on that map tunnel on yTile = 14
+		// If the map (board) has tiles with coordinates from 0 to N-1, it is possible for the creature to go from
+		// 0 to N-1 directly (if both tiles are empty, i.e. not solid). In that case, the transition would go through
+		// one imaginary tile at coordinate -1 or N.
+		// The checks below make sure that the alignment is done properly on both axes in this case.
+		if (this.x <= -Tile.TILE_WIDTH) {
+			this.x = Game.GAME_BOARD_WIDTH_PIXELS;
+		} else if (this.x >= Game.GAME_BOARD_WIDTH_PIXELS) {
+			this.x = -Tile.TILE_WIDTH;
+		}
+		if (this.y <= -Tile.TILE_HEIGHT) {
+			this.y = Game.GAME_BOARD_HEIGHT_PIXELS;
+		} else if (this.y >= Game.GAME_BOARD_HEIGHT_PIXELS) {
+			this.y = -Tile.TILE_HEIGHT;
+		}
 	}
 
 	private void setMovesAndTiles(Direction direction) {
@@ -64,8 +78,6 @@ public abstract class Creature extends Entity {
 
 		this.xMove = 0;
 		this.yMove = 0;
-		this.xTileNext = xTileCurrent;
-		this.yTileNext = yTileCurrent;
 
 		if (direction == null) {
 			return;
@@ -74,19 +86,15 @@ public abstract class Creature extends Entity {
 		switch (direction) {
 			case UP:
 				this.yMove = -this.speed;
-				this.yTileNext = this.yTileCurrent - 1;
 				break;
 			case DOWN:
 				this.yMove = this.speed;
-				this.yTileNext = this.yTileCurrent + 1;
 				break;
 			case LEFT:
 				this.xMove = -this.speed;
-				this.xTileNext = this.xTileCurrent - 1;
 				break;
 			case RIGHT:
 				this.xMove = this.speed;
-				this.xTileNext = this.xTileCurrent + 1;
 				break;
 		}
 	}
@@ -98,7 +106,8 @@ public abstract class Creature extends Entity {
 
 		this.setMovesAndTiles(desiredDirection);
 
-		if (!this.canMoveToTile(this.xTileNext, this.yTileNext)) { // movement to the next tile is not possible
+		Coordinates c = this.getAdjacentTileCoordinates(this.xTileCurrent, this.yTileCurrent, desiredDirection);
+		if (c == null) { // movement to the next tile is not possible
 			return;
 		}
 
@@ -121,7 +130,8 @@ public abstract class Creature extends Entity {
 
 		this.setMovesAndTiles(this.currentDirection);
 
-		if (this.canMoveToTile(this.xTileNext, this.yTileNext)) { // movement to the next tile is possible
+		Coordinates c = this.getAdjacentTileCoordinates(this.xTileCurrent, this.yTileCurrent, this.currentDirection);
+		if (c != null) { // movement to the next tile is possible
 			return true;
 		}
 
@@ -140,8 +150,8 @@ public abstract class Creature extends Entity {
 		return Math.abs(xNext - currentTileMinX) + Math.abs(yNext - currentTileMinY) > speed;
 	}
 
-	private boolean canMoveToTile(int xTile, int yTile) {
-		return this.handler.getBoard().canMoveToTile(xTile, yTile);
+	private Coordinates getAdjacentTileCoordinates(int xTile, int yTile, Direction direction) {
+		return this.handler.getBoard().getAdjacentTileCoordinates(xTile, yTile, direction);
 	}
 
 	private char getDirectionAxis(Direction direction) {

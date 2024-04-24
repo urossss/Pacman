@@ -36,7 +36,7 @@ public class GamePlayState extends State {
 			return;
 		}
 
-		if (this.handler.getEntityManager().getPacman().getYTile() == 18) { // todo: fix this test condition
+		if (this.handler.getEntityManager().getPacman().getYTile() == 13) { // todo: fix this test condition
 			this.handler.getStateManager().startPacmanDiedState();
 		}
 	}
