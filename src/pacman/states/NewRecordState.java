@@ -1,6 +1,5 @@
 package pacman.states;
 
-import pacman.core.Game;
 import pacman.core.Handler;
 import pacman.graphics.TextRenderer;
 
