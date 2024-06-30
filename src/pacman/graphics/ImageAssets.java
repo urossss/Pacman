@@ -12,7 +12,7 @@ public class ImageAssets {
 	public static BufferedImage title, ready, game_over;
 	public static BufferedImage[] digits, letters;
 	public static BufferedImage[][] ghost_up, ghost_down, ghost_left, ghost_right;
-	public static BufferedImage[] ghost_scared_1, ghost_scared_2, ghost_eaten;
+	public static BufferedImage[] ghost_vulnerable_1, ghost_vulnerable_2, ghost_died;
 	public static BufferedImage[] pacman_up, pacman_down, pacman_left, pacman_right, pacman_eaten;
 	public static BufferedImage map1, map2, food, powerFood;
 	public static BufferedImage underscore;
@@ -48,9 +48,9 @@ public class ImageAssets {
 			ghost_down[i] = loadArray(sheet, GHOST_SIZE * 6, 124 + i * GHOST_SIZE, 2, GHOST_SIZE);
 		}
 
-		ghost_scared_1 = loadArray(sheet, 0, 124 + GHOST_SIZE * 4, 2, GHOST_SIZE);
-		ghost_scared_2 = loadArray(sheet, GHOST_SIZE * 2, 124 + GHOST_SIZE * 4, 2, GHOST_SIZE);
-		ghost_eaten = loadArray(sheet, GHOST_SIZE * 4, 124 + GHOST_SIZE * 4, 4, GHOST_SIZE);
+		ghost_vulnerable_1 = loadArray(sheet, 0, 124 + GHOST_SIZE * 4, 2, GHOST_SIZE);
+		ghost_vulnerable_2 = loadArray(sheet, GHOST_SIZE * 2, 124 + GHOST_SIZE * 4, 2, GHOST_SIZE);
+		ghost_died = loadArray(sheet, GHOST_SIZE * 4, 124 + GHOST_SIZE * 4, 4, GHOST_SIZE);
 
 		pacman_eaten = loadArray(sheet, 0, 258, 16, PACMAN_SIZE);
 		pacman_right = loadArray(sheet, 0, 89, 4, PACMAN_SIZE);

@@ -26,7 +26,7 @@ public abstract class Creature extends Entity {
 		super(handler, x, y, width, height);
 	}
 
-	public abstract Direction calculateDesiredDirection();
+	protected abstract Direction calculateDesiredDirection();
 
 	public void move() {
 		// change the direction to the target (desired) direction if possible
@@ -162,5 +162,17 @@ public abstract class Creature extends Entity {
 			return 'x';
 		}
 		return '?';
+	}
+
+	public double getSpeed() {
+		return this.speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+	public Direction getCurrentDirection() {
+		return this.currentDirection;
 	}
 }

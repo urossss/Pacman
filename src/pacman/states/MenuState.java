@@ -59,7 +59,7 @@ public class MenuState extends State {
 		this.chaseAnimationRight = new Animation[5];
 		this.chaseAnimationRight[0] = new Animation(50, ImageAssets.pacman_right);
 		for (int i = 1; i <= 4; i++) {
-			this.chaseAnimationRight[i] = new Animation(50, ImageAssets.ghost_scared_1);
+			this.chaseAnimationRight[i] = new Animation(50, ImageAssets.ghost_vulnerable_1);
 		}
 	}
 

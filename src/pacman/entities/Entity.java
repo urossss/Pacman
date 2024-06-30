@@ -48,4 +48,20 @@ public abstract class Entity {
 	public double getY() {
 		return y;
 	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getTileXOffset() {
+		return tileXOffset;
+	}
+
+	public int getTileYOffset() {
+		return tileYOffset;
+	}
 }
