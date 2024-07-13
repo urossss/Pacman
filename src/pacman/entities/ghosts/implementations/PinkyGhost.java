@@ -1,7 +1,8 @@
-package pacman.entities.ghosts;
+package pacman.entities.ghosts.implementations;
 
 import pacman.core.Handler;
 import pacman.entities.Creature;
+import pacman.entities.ghosts.Ghost;
 import pacman.tiles.Coordinates;
 
 public class PinkyGhost extends Ghost {

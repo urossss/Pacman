@@ -17,6 +17,9 @@ public abstract class Ghost extends Creature {
 	protected final int scatterXTarget, scatterYTarget;
 	protected final int cageXTarget = 13, cageYTarget = 11;
 
+	private int nextTileX, nextTileY;
+	private Direction nextDirection;
+
 	protected GhostState currentState;
 
 	protected GhostState scatterState;
@@ -39,14 +42,24 @@ public abstract class Ghost extends Creature {
 	@Override
 	protected Direction calculateDesiredDirection() {
 		if (this.currentState == null) {
-			return Direction.RIGHT;
+			return this.currentDirection;
+		}
+
+		if (this.nextDirection == null) {
+			this.setNextTileAndDirection(this.currentDirection);
+		}
+
+		int xCurrent = this.getXTile();
+		int yCurrent = this.getYTile();
+
+		// it's possible to change the direction only after previously set next tile has been reached
+		if (!(xCurrent == this.nextTileX && yCurrent == this.nextTileY)) {
+			return this.nextDirection;
 		}
 
 		Coordinates target = this.currentState.calculateTarget();
 		int xTarget = target.x;
 		int yTarget = target.y;
-		int xCurrent = this.getXTile();
-		int yCurrent = this.getYTile();
 
 		boolean[] possibleMove = new boolean[4];
 		possibleMove[0] = this.handler.getBoard().getAdjacentTileCoordinates(xCurrent, yCurrent, Direction.UP) != null;
@@ -54,11 +67,8 @@ public abstract class Ghost extends Creature {
 		possibleMove[2] = this.handler.getBoard().getAdjacentTileCoordinates(xCurrent, yCurrent, Direction.LEFT) != null;
 		possibleMove[3] = this.handler.getBoard().getAdjacentTileCoordinates(xCurrent, yCurrent, Direction.RIGHT) != null;
 
-//		System.out.println("calculateDesiredDirection, current direction: " + this.currentDirection);
-//		System.out.println("Possible moves: " + possibleMove[0] + " " + possibleMove[1] + " " + possibleMove[2] + " " + possibleMove[3]);
-
 		// a ghost can never reverse a direction
-		switch (currentDirection) {
+		switch (this.currentDirection) {
 			case UP:
 				possibleMove[1] = false;
 				break;
@@ -72,7 +82,6 @@ public abstract class Ghost extends Creature {
 				possibleMove[2] = false;
 				break;
 		}
-//		System.out.println("Possible moves: " + possibleMove[0] + " " + possibleMove[1] + " " + possibleMove[2] + " " + possibleMove[3]);
 
 		double[] dist = new double[4];
 		dist[0] = distance(xCurrent, yCurrent - 1, xTarget, yTarget);   // up
@@ -113,11 +122,11 @@ public abstract class Ghost extends Creature {
 			default: // index == -1 means no change in direction
 		}
 
-//		System.out.println("Desired direction: " + desiredDirection);
+//		if (desiredDirection != this.currentDirection) {
+//			System.out.println("Current: " + this.currentDirection + " -> desired: " + desiredDirection);
+//		}
 
-		if (desiredDirection != this.currentDirection) {
-			System.out.println("Current: " + this.currentDirection + " -> desired: " + desiredDirection);
-		}
+		this.setNextTileAndDirection(desiredDirection);
 
 		return desiredDirection;
 	}
@@ -171,6 +180,26 @@ public abstract class Ghost extends Creature {
 
 	private double distance(int x1, int y1, int x2, int y2) {
 		return Math.hypot(x1 - x2, y1 - y2);
+	}
+
+	private void setNextTileAndDirection(Direction direction) {
+		int currentTileX = this.getXTile();
+		int currentTileY = this.getYTile();
+
+		this.nextTileX = currentTileX;
+		this.nextTileY = currentTileY;
+		this.nextDirection = direction;
+
+		if (direction == null) {
+			return;
+		}
+
+		Coordinates nextTile = this.handler.getBoard().getAdjacentTileCoordinates(currentTileX, currentTileY, direction);
+
+		if (nextTile != null) {
+			this.nextTileX = nextTile.x;
+			this.nextTileY = nextTile.y;
+		}
 	}
 
 }
