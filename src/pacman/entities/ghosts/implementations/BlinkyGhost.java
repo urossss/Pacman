@@ -21,4 +21,9 @@ public class BlinkyGhost extends Ghost {
 		Creature pacman = this.handler.getEntityManager().getPacman();
 		return new Coordinates(pacman.getXTile(), pacman.getYTile());
 	}
+
+	@Override
+	public int getMaxCageTimeMillis() {
+		return 0;
+	}
 }

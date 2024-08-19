@@ -10,7 +10,8 @@ public class TileManager {
 			new EmptyTile(0),
 			new WallTile(1),
 			new FoodTile(2),
-			new PowerFoodTile(3)
+			new PowerFoodTile(3),
+			new CageDoorTile(4)
 		};
 	}
 

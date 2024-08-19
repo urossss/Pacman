@@ -41,6 +41,9 @@ public class Game implements Runnable {
 	private String highScorePlayer;
 	private int livesLeft;
 	private boolean isNewHighScore = false;
+	private int currentLevel;
+
+	private boolean isGhostScatterModeActive = false;
 
 	public Game() {
 
@@ -203,6 +206,7 @@ public class Game implements Runnable {
 		this.score = 0;
 		this.livesLeft = 3;
 		this.isNewHighScore = false;
+		this.currentLevel = 1;
 
 		this.readHighScore();
 
@@ -260,6 +264,14 @@ public class Game implements Runnable {
 
 	public int getLivesLeft() {
 		return livesLeft;
+	}
+
+	public int getCurrentLevel() {
+		return currentLevel;
+	}
+
+	public boolean isGhostScatterModeActive() {
+		return isGhostScatterModeActive;
 	}
 
 	// Private implementation

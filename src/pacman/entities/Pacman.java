@@ -36,6 +36,11 @@ public class Pacman extends Creature {
 	}
 
 	@Override
+	public boolean canMoveThroughCageDoor() {
+		return false;
+	}
+
+	@Override
 	public void update() {
 		this.updateAnimations();
 		this.move();

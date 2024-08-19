@@ -1,13 +1,8 @@
 package pacman.entities.ghosts.states;
 
 import pacman.core.Handler;
-import pacman.entities.Creature;
 import pacman.entities.ghosts.Ghost;
-import pacman.graphics.Animation;
 import pacman.tiles.Coordinates;
-
-import java.awt.*;
-import java.util.Map;
 
 public class GhostScatterState extends GhostState {
 

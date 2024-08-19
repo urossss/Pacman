@@ -28,4 +28,8 @@ public abstract class Tile {
 		return 0;
 	}
 
+	public boolean isCageDoor() {
+		return false;
+	}
+
 }

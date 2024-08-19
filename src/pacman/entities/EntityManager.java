@@ -22,20 +22,21 @@ public class EntityManager {
 		this.pacman = new Pacman(handler);
 
 		this.blinky = new BlinkyGhost(handler, 216, 176, 25, -3);
-		this.blinky.startScatterState();
+//		this.blinky.startScatterState();
 
-//		this.pinky = new PinkyGhost(handler, 186, 232, 2, -3);
-		this.pinky = new PinkyGhost(handler, 216, 176, 4, 14);
-		this.pinky.startScatterState();
+		this.pinky = new PinkyGhost(handler, 186, 232, 2, -3);
+//		this.pinky = new PinkyGhost(handler, 216, 176, 4, 14);
+//		this.pinky.startCageState();
+//		this.pinky.setCanMoveThroughCageDoor(true);
 
-		this.inky = new InkyGhost(handler, 216, 176, 27, 32);
-		this.inky.startScatterState();
+		this.inky = new InkyGhost(handler, 210, 210, 27, 32);
+//		this.inky.startCageState();
 
-		this.clyde = new ClydeGhost(handler, 216, 176, 0, 32);
-		this.clyde.startScatterState();
+		this.clyde = new ClydeGhost(handler, 246, 220, 0, 32);
+//		this.clyde.startCageState();
 
 		this.entities = new ArrayList<>();
-//		this.entities.add(this.pacman);
+		this.entities.add(this.pacman);
 		this.entities.add(this.blinky);
 		this.entities.add(this.pinky);
 		this.entities.add(this.inky);
@@ -43,14 +44,14 @@ public class EntityManager {
 	}
 
 	public void update() {
-//		this.pacman.update();
+//		this.pacman.update(); // updated below
 		for (Entity e : this.entities) {
 			e.update();
 		}
 	}
 
 	public void render(Graphics g) {
-//		this.pacman.render(g);
+//		this.pacman.render(g); // rendered below
 		for (Entity e : this.entities) {
 			e.render(g);
 		}
@@ -59,4 +60,21 @@ public class EntityManager {
 	public Pacman getPacman() {
 		return pacman;
 	}
+
+	public Ghost getBlinky() {
+		return blinky;
+	}
+
+	public Ghost getPinky() {
+		return pinky;
+	}
+
+	public Ghost getInky() {
+		return inky;
+	}
+
+	public Ghost getClyde() {
+		return clyde;
+	}
+
 }

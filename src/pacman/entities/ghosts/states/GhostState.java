@@ -6,6 +6,7 @@ import pacman.entities.ghosts.Ghost;
 import pacman.graphics.Animation;
 import pacman.graphics.ImageAssets;
 import pacman.tiles.Coordinates;
+import pacman.tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -53,6 +54,10 @@ public abstract class GhostState {
 				this.ghost.getWidth(),
 				this.ghost.getHeight(),
 				null);
+		g.setColor(Color.red);
+		g.drawRect((int) this.ghost.getX(), (int) this.ghost.getY(), Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+		g.setColor(Color.green);
+		g.drawRect(this.ghost.getXTile() * Tile.TILE_WIDTH, this.ghost.getYTile() * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
 	}
 
 	private void updateAnimations() {

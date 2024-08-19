@@ -28,6 +28,8 @@ public abstract class Creature extends Entity {
 
 	protected abstract Direction calculateDesiredDirection();
 
+	protected abstract boolean canMoveThroughCageDoor();
+
 	public void move() {
 		// change the direction to the target (desired) direction if possible
 		Direction desiredDirection = this.calculateDesiredDirection();
@@ -150,8 +152,8 @@ public abstract class Creature extends Entity {
 		return Math.abs(xNext - currentTileMinX) + Math.abs(yNext - currentTileMinY) > speed;
 	}
 
-	private Coordinates getAdjacentTileCoordinates(int xTile, int yTile, Direction direction) {
-		return this.handler.getBoard().getAdjacentTileCoordinates(xTile, yTile, direction);
+	protected Coordinates getAdjacentTileCoordinates(int xTile, int yTile, Direction direction) {
+		return this.handler.getBoard().getAdjacentTileCoordinates(xTile, yTile, direction, this.canMoveThroughCageDoor());
 	}
 
 	private char getDirectionAxis(Direction direction) {

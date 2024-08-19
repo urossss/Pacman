@@ -17,8 +17,13 @@ public class InkyGhost extends Ghost {
 	}
 
 	@Override
-	public Coordinates getChaseTarget() {
+	public Coordinates getChaseTarget() { // TODO: fix the algorithm
 		Creature pacman = this.handler.getEntityManager().getPacman();
 		return new Coordinates(pacman.getXTile(), pacman.getYTile());
+	}
+
+	@Override
+	public int getMaxCageTimeMillis() {
+		return 3000;
 	}
 }

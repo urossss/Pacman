@@ -2,6 +2,7 @@ package pacman.entities.ghosts;
 
 import pacman.core.Handler;
 import pacman.entities.Creature;
+import pacman.entities.ghosts.states.GhostCageState;
 import pacman.entities.ghosts.states.GhostScatterState;
 import pacman.entities.ghosts.states.GhostState;
 import pacman.entities.ghosts.states.GhostVulnerableState;
@@ -15,14 +16,18 @@ public abstract class Ghost extends Creature {
 	private static double baseSpeed = 2.0;
 
 	protected final int scatterXTarget, scatterYTarget;
-	protected final int cageXTarget = 13, cageYTarget = 11;
+	protected final int cageXTarget = 14, cageYTarget = 11;
 
 	private int nextTileX, nextTileY;
 	private Direction nextDirection;
 
+	private boolean canMoveThroughCageDoor = false;
+
 	protected GhostState currentState;
 
+	protected GhostState cageState;
 	protected GhostState scatterState;
+	protected GhostState chaseState;
 	protected GhostState vulnerableState;
 
 	public Ghost(Handler handler, double x, double y, int scatterXTarget, int scatterYTarget) {
@@ -31,6 +36,8 @@ public abstract class Ghost extends Creature {
 		this.scatterXTarget = scatterXTarget;
 		this.scatterYTarget = scatterYTarget;
 
+		this.cageState = new GhostCageState(this, handler);
+//		this.chaseState = new GhostChaseState(this, handler);
 		this.scatterState = new GhostScatterState(this, handler);
 		this.vulnerableState = new GhostVulnerableState(this, handler);
 	}
@@ -38,6 +45,8 @@ public abstract class Ghost extends Creature {
 	public abstract int getGhostId();
 
 	public abstract Coordinates getChaseTarget();
+
+	public abstract int getMaxCageTimeMillis();
 
 	@Override
 	protected Direction calculateDesiredDirection() {
@@ -62,10 +71,10 @@ public abstract class Ghost extends Creature {
 		int yTarget = target.y;
 
 		boolean[] possibleMove = new boolean[4];
-		possibleMove[0] = this.handler.getBoard().getAdjacentTileCoordinates(xCurrent, yCurrent, Direction.UP) != null;
-		possibleMove[1] = this.handler.getBoard().getAdjacentTileCoordinates(xCurrent, yCurrent, Direction.DOWN) != null;
-		possibleMove[2] = this.handler.getBoard().getAdjacentTileCoordinates(xCurrent, yCurrent, Direction.LEFT) != null;
-		possibleMove[3] = this.handler.getBoard().getAdjacentTileCoordinates(xCurrent, yCurrent, Direction.RIGHT) != null;
+		possibleMove[0] = this.getAdjacentTileCoordinates(xCurrent, yCurrent, Direction.UP) != null;
+		possibleMove[1] = this.getAdjacentTileCoordinates(xCurrent, yCurrent, Direction.DOWN) != null;
+		possibleMove[2] = this.getAdjacentTileCoordinates(xCurrent, yCurrent, Direction.LEFT) != null;
+		possibleMove[3] = this.getAdjacentTileCoordinates(xCurrent, yCurrent, Direction.RIGHT) != null;
 
 		// a ghost can never reverse a direction
 		switch (this.currentDirection) {
@@ -131,6 +140,11 @@ public abstract class Ghost extends Creature {
 		return desiredDirection;
 	}
 
+	@Override
+	public boolean canMoveThroughCageDoor() {
+		return this.canMoveThroughCageDoor;
+	}
+
 	// public interface
 
 	@Override
@@ -148,9 +162,21 @@ public abstract class Ghost extends Creature {
 		}
 	}
 
+	public void startCageState() {
+		this.currentState = this.cageState;
+		this.cageState.start();
+	}
+
 	public void startScatterState() {
+//		System.out.println("startScatterState " + getGhostId());
 		this.currentState = this.scatterState;
 		this.scatterState.start();
+	}
+
+	public void startChaseState() {
+//		System.out.println("startChaseState " + getGhostId());
+//		this.currentState = this.chaseState;
+//		this.chaseState.start();
 	}
 
 	public void startVulnerableState() {
@@ -164,6 +190,18 @@ public abstract class Ghost extends Creature {
 
 	public int getScatterYTarget() {
 		return scatterYTarget;
+	}
+
+	public int getCageXTarget() {
+		return cageXTarget;
+	}
+
+	public int getCageYTarget() {
+		return cageYTarget;
+	}
+
+	public void setCanMoveThroughCageDoor(boolean canMoveThroughCageDoor) {
+		this.canMoveThroughCageDoor = canMoveThroughCageDoor;
 	}
 
 	// static interface
@@ -194,7 +232,7 @@ public abstract class Ghost extends Creature {
 			return;
 		}
 
-		Coordinates nextTile = this.handler.getBoard().getAdjacentTileCoordinates(currentTileX, currentTileY, direction);
+		Coordinates nextTile = this.getAdjacentTileCoordinates(currentTileX, currentTileY, direction);
 
 		if (nextTile != null) {
 			this.nextTileX = nextTile.x;

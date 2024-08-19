@@ -65,7 +65,7 @@ public class Board {
 
 	// Public interface
 
-	public Coordinates getAdjacentTileCoordinates(int x, int y, Direction direction) {
+	public Coordinates getAdjacentTileCoordinates(int x, int y, Direction direction, boolean canMoveThroughCageDoor) {
 		int xTarget = x;
 		int yTarget = y;
 
@@ -99,6 +99,10 @@ public class Board {
 			while (yTarget >= this.height) {
 				yTarget -= this.height;
 			}
+		}
+
+		if (this.tiles[xTarget][yTarget].isCageDoor() && canMoveThroughCageDoor) {
+			return new Coordinates(xTarget, yTarget);
 		}
 
 		if (this.tiles[xTarget][yTarget].isSolid()) {

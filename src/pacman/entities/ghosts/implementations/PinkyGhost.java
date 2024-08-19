@@ -40,4 +40,9 @@ public class PinkyGhost extends Ghost {
 
 		return new Coordinates(xTarget, yTarget);
 	}
+
+	@Override
+	public int getMaxCageTimeMillis() {
+		return 2000;
+	}
 }
