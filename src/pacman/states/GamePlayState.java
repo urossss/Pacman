@@ -11,10 +11,13 @@ public class GamePlayState extends State {
 	private long previousTime;
 	private long timer = 0;
 
+	private int[] scatterChaseSwitchTimes;
+	private int scatterChaseSwitchIndex;
+	private long scatterChaseNextSwitchTime;
+	private boolean scatterModeActive;
+
 	public GamePlayState(Handler handler) {
 		super(handler);
-
-		this.resetGamePlay();
 	}
 
 	@Override
@@ -22,10 +25,13 @@ public class GamePlayState extends State {
 		this.isGameResumed = false;
 		this.previousTime = System.currentTimeMillis();
 
-		this.handler.getEntityManager().getBlinky().startScatterState();
-		this.handler.getEntityManager().getPinky().startCageState();
-		this.handler.getEntityManager().getInky().startCageState();
-		this.handler.getEntityManager().getClyde().startCageState();
+		this.resetGamePlay();
+	}
+
+	public void resume() {
+		this.isGameResumed = true;
+		this.previousTime = System.currentTimeMillis();
+		this.handler.getStateManager().setCurrentState(this);
 	}
 
 	@Override
@@ -46,6 +52,7 @@ public class GamePlayState extends State {
 
 		if (this.handler.getBoard().isCompleted()) {
 			this.handler.getStateManager().startLevelCompletedState();
+			this.handler.getGame().increaseCurrentLevel();
 			this.resetGamePlay();
 			return;
 		}
@@ -69,7 +76,21 @@ public class GamePlayState extends State {
 	// private implementation
 
 	private void resetGamePlay() {
+		this.scatterModeActive = true;
+		this.handler.getGame().setGhostScatterModeActive(true);
+
+		this.handler.getEntityManager().getBlinky().startScatterState();
+		this.handler.getEntityManager().getPinky().startCageState();
+		this.handler.getEntityManager().getInky().startCageState();
+		this.handler.getEntityManager().getClyde().startCageState();
+
 		this.timer = 0;
+		this.scatterChaseSwitchTimes = this.handler.getGame().getScatterChaseSwitchTimesInSeconds();
+		this.scatterChaseSwitchIndex = 0;
+		this.scatterModeActive = true;
+		if (this.scatterChaseSwitchTimes.length > 0) {
+			this.scatterChaseNextSwitchTime = this.scatterChaseSwitchTimes[0] * 1000;
+		}
 	}
 
 	private void timerUpdates() {
@@ -77,12 +98,17 @@ public class GamePlayState extends State {
 		this.timer += currentTime - this.previousTime;
 		this.previousTime = currentTime;
 
-		int level = this.handler.getGame().getCurrentLevel();
+		if (this.timer >= this.scatterChaseNextSwitchTime) {
+			this.scatterModeActive = !this.scatterModeActive;
+			this.handler.getGame().setGhostScatterModeActive(this.scatterModeActive);
+			System.out.println("scatter mode active: " + this.scatterModeActive + " timer: " + this.timer);
 
-		// TODO: scatter/chase mode switching on timer based on level
-
-		if (this.timer >= 10000) {
-			this.handler.getGame().setGhostScatterModeActive(true);
+			this.scatterChaseSwitchIndex++;
+			if (this.scatterChaseSwitchTimes.length > this.scatterChaseSwitchIndex) {
+				this.scatterChaseNextSwitchTime += this.scatterChaseSwitchTimes[this.scatterChaseSwitchIndex] * 1000;
+			} else {
+				this.scatterChaseNextSwitchTime = Long.MAX_VALUE;
+			}
 		}
 	}
 

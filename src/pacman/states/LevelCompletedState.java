@@ -46,7 +46,6 @@ public class LevelCompletedState extends State {
 
 		if (this.timer >= T2) {
 			this.handler.getStateManager().startGameReadyState();
-			this.handler.getGame().increaseCurrentLevel();
 		}
 	}
 

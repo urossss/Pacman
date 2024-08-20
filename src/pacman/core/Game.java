@@ -43,10 +43,10 @@ public class Game implements Runnable {
 	private String highScorePlayer;
 	private int livesLeft;
 	private boolean isNewHighScore = false;
-	private int currentLevel;
+	private int currentLevel = 1;
 	private int ghostsEatenCount;
 
-	private boolean ghostScatterModeActive = false;
+	private boolean ghostScatterModeActive = true;
 
 	public Game() {
 
@@ -210,6 +210,7 @@ public class Game implements Runnable {
 		this.livesLeft = 3;
 		this.isNewHighScore = false;
 		this.currentLevel = 1;
+		this.ghostScatterModeActive = true;
 
 		this.readHighScore();
 
@@ -218,7 +219,7 @@ public class Game implements Runnable {
 
 	public void scorePoints(int points) {
 		if (this.score / 10000 != (this.score + points) / 10000) { // extra life for every 10,000 points scored
-			this.livesLeft++;
+			this.increaseLivesLeft();
 		}
 		this.score += points;
 
@@ -229,7 +230,7 @@ public class Game implements Runnable {
 	}
 
 	public void increaseLivesLeft() {
-		livesLeft++;
+		this.livesLeft = Math.min(this.livesLeft + 1, 5);
 	}
 
 	public void decreaseLivesLeft() {
@@ -337,6 +338,17 @@ public class Game implements Runnable {
 
 	public double getGhostDiedSpeed() {
 		return 3 * Ghost.GHOST_MAX_SPEED;
+	}
+
+	public int[] getScatterChaseSwitchTimesInSeconds() {
+		System.out.println("getScatterChaseSwitchTimesInSeconds for level " + this.currentLevel);
+		switch (this.currentLevel) {
+			case 1: return new int[]{ 7, 20, 7, 20, 5, 20, 5, Integer.MAX_VALUE };
+			case 2:
+			case 3:
+			case 4: return new int[]{ 7, 20, 7, 20, 5, 100, 3, Integer.MAX_VALUE };
+			default: return new int[]{ 5, 20, 5, 20, 5, 200, 2, Integer.MAX_VALUE };
+		}
 	}
 
 	// Getters

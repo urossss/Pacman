@@ -84,8 +84,7 @@ public class StateManager {
 	}
 
 	public void resumeGamePlayState() {
-		this.gamePlayState.start();
-		this.gamePlayState.setResumeStatus(true);
+		this.gamePlayState.resume();
 	}
 
 	// Implementation

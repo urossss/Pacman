@@ -88,7 +88,7 @@ public abstract class State {
 
 		if (this.shouldDrawLives) {
 			g.translate(0, Game.GAME_BOARD_HEIGHT_PIXELS + Game.GAME_TOP_SECTION_HEIGHT_PIXELS);
-			for (int i = 0; i < handler.getGame().getLivesLeft(); i++) {
+			for (int i = 0; i < Math.min(handler.getGame().getLivesLeft(), 4); i++) {
 				g.drawImage(ImageAssets.pacman_left[1], 30 * i, 0, 30, 30, null);
 			}
 		}
