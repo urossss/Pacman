@@ -1,6 +1,7 @@
 package pacman.core;
 
 import pacman.display.Display;
+import pacman.entities.Pacman;
 import pacman.entities.ghosts.Ghost;
 import pacman.graphics.ImageAssets;
 import pacman.input.KeyManager;
@@ -273,11 +274,69 @@ public class Game implements Runnable {
 		for (Ghost g : this.handler.getEntityManager().getGhosts()) {
 			g.startVulnerableState();
 		}
+
+		Pacman pacman = this.handler.getEntityManager().getPacman();
+		pacman.setSpeed(this.getPacmanPowerSpeed());
+		pacman.setTimeToClearPowerSpeed(System.currentTimeMillis() + this.getGhostVulnerableStateDurationMillis());
 	}
 
 	public void ghostEaten(Ghost g) {
 		g.startDiedState();
 		this.scorePoints((int) (200 * Math.pow(2, this.ghostsEatenCount++)));
+	}
+
+	public double getPacmanRegularSpeed() {
+		switch (this.currentLevel) {
+			case 1: return 0.8 * Pacman.PACMAN_MAX_SPEED;
+			case 2:
+			case 3:
+			case 4: return 0.9 * Pacman.PACMAN_MAX_SPEED;
+			default: return 1.0 * Pacman.PACMAN_MAX_SPEED;
+		}
+	}
+
+	public double getPacmanPowerSpeed() {
+		switch (this.currentLevel) {
+			case 1: return 0.9 * Pacman.PACMAN_MAX_SPEED;
+			case 2:
+			case 3:
+			case 4: return 0.95 * Pacman.PACMAN_MAX_SPEED;
+			default: return 1.0 * Pacman.PACMAN_MAX_SPEED;
+		}
+	}
+
+	public double getGhostRegularSpeed() {
+		switch (this.currentLevel) {
+			case 1: return 0.8 * Ghost.GHOST_MAX_SPEED;
+			case 2:
+			case 3:
+			case 4: return 0.85 * Ghost.GHOST_MAX_SPEED;
+			default: return 0.95 * Ghost.GHOST_MAX_SPEED;
+		}
+	}
+
+	public double getGhostVulnerableSpeed() {
+		switch (this.currentLevel) {
+			case 1: return 0.5 * Ghost.GHOST_MAX_SPEED;
+			case 2:
+			case 3:
+			case 4: return 0.55 * Ghost.GHOST_MAX_SPEED;
+			default: return 0.6 * Ghost.GHOST_MAX_SPEED;
+		}
+	}
+
+	public double getGhostTunnelSpeed() {
+		switch (this.currentLevel) {
+			case 1: return 0.4 * Ghost.GHOST_MAX_SPEED;
+			case 2:
+			case 3:
+			case 4: return 0.45 * Ghost.GHOST_MAX_SPEED;
+			default: return 0.5 * Ghost.GHOST_MAX_SPEED;
+		}
+	}
+
+	public double getGhostDiedSpeed() {
+		return 3 * Ghost.GHOST_MAX_SPEED;
 	}
 
 	// Getters

@@ -145,6 +145,10 @@ public class Board {
 		return this.tiles[x][y] instanceof CageInsideTile;
 	}
 
+	public boolean isTileInsideTunnel(int x, int y) {
+		return y == 14 && (x <= 5 || x >= 22);
+	}
+
 	public boolean isCompleted() {
 		return this.foodLeft == 0;
 	}
@@ -172,5 +176,4 @@ public class Board {
 			}
 		}
 	}
-
 }

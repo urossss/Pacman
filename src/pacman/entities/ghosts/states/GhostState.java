@@ -47,6 +47,7 @@ public abstract class GhostState {
 
 	public void start() {
 		this.ghost.setCanMoveThroughCageDoor(false);
+		this.ghost.setSpeed(this.handler.getGame().getGhostRegularSpeed());
 		this.startImpl();
 	}
 
@@ -63,11 +64,6 @@ public abstract class GhostState {
 				this.ghost.getWidth(),
 				this.ghost.getHeight(),
 				null);
-		g.setColor(Color.red);
-		g.drawRect((int) this.ghost.getX(), (int) this.ghost.getY(), Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
-		g.setColor(Color.green);
-		g.drawRect(this.ghost.getXTile() * Tile.TILE_WIDTH, this.ghost.getYTile() * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
-
 		this.renderImpl(g);
 	}
 

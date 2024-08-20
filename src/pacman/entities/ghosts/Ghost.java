@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public abstract class Ghost extends Creature {
 
-	private static double baseSpeed = 2.0;
+	public static final double GHOST_MAX_SPEED = 2.5;
 
 	protected final int scatterXTarget, scatterYTarget;
 	protected final int cageXTarget = 14, cageYTarget = 11;
@@ -20,6 +20,8 @@ public abstract class Ghost extends Creature {
 	private Direction nextDirection;
 
 	private boolean canMoveThroughCageDoor = false;
+	private boolean isInTheTunnel = false;
+	private double speedBeforeTunnel;
 	private long cageStateEndTime, vulnerableStateEndTime;
 	private int diedXTile, diedYTile, diedGhostIndex;
 
@@ -170,6 +172,19 @@ public abstract class Ghost extends Creature {
 			this.currentState.update();
 		}
 		this.move();
+
+		if (this.handler.getBoard().isTileInsideTunnel(this.getXTile(), this.getYTile())) {
+			if (!this.isInTheTunnel && !(this.currentState instanceof GhostDiedState)) {
+				this.isInTheTunnel = true;
+				this.speedBeforeTunnel = this.getSpeed();
+				this.setSpeed(this.handler.getGame().getGhostTunnelSpeed());
+			}
+		} else {
+			if (this.isInTheTunnel) {
+				this.isInTheTunnel = false;
+				this.setSpeed(this.speedBeforeTunnel);
+			}
+		}
 	}
 
 	@Override
@@ -272,16 +287,6 @@ public abstract class Ghost extends Creature {
 
 	public boolean canEat() {
 		return this.currentState instanceof GhostScatterState || this.currentState instanceof GhostChaseState;
-	}
-
-	// static interface
-
-	public static double getBaseSpeed() {
-		return Ghost.baseSpeed;
-	}
-
-	public static void setBaseSpeed(double baseSpeed) {
-		Ghost.baseSpeed = baseSpeed;
 	}
 
 	// helper methods

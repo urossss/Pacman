@@ -12,9 +12,12 @@ import java.util.Map;
 
 public class Pacman extends Creature {
 
+	public static final double PACMAN_MAX_SPEED = 2.5;
 	private static final int DEFAULT_PACMAN_STARTING_X = 216, DEFAULT_PACMAN_STARTING_Y = 368;
 
 	private Map<Direction, Animation> animations;
+
+	private long timeToClearPowerSpeed = -1;
 
 	public Pacman(Handler handler) {
 		this(handler, DEFAULT_PACMAN_STARTING_X, DEFAULT_PACMAN_STARTING_Y);
@@ -43,18 +46,23 @@ public class Pacman extends Creature {
 	@Override
 	public void update() {
 		this.updateAnimations();
+
+		long currentTime = System.currentTimeMillis();
+		if (this.timeToClearPowerSpeed > 0 && currentTime > this.timeToClearPowerSpeed) {
+			this.setSpeed(this.handler.getGame().getPacmanRegularSpeed());
+		}
+
 		this.move();
 		this.handler.getBoard().eatTile(this.getXTile(), this.getYTile());
-		// todo: check for collision with other entities
 	}
 
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(this.getCurrentAnimationFrame(), (int) this.x - this.tileXOffset, (int) this.y - this.tileYOffset, this.width, this.height, null);
-		g.setColor(Color.red);
-		g.drawRect((int) this.x, (int) this.y, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
-		g.setColor(Color.green);
-		g.drawRect(this.getXTile() * Tile.TILE_WIDTH, this.getYTile() * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+	}
+
+	public void setTimeToClearPowerSpeed(long timeToClearPowerSpeed) {
+		this.timeToClearPowerSpeed = timeToClearPowerSpeed;
 	}
 
 	private void updateAnimations() {

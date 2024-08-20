@@ -12,7 +12,7 @@ public class GhostChaseState extends GhostState {
 
 	@Override
 	public void startImpl() {
-		// TODO: set speed
+		// Empty
 	}
 
 	@Override

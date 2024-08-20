@@ -16,7 +16,7 @@ public class GhostScatterState extends GhostState {
 
 	@Override
 	public void startImpl() {
-		this.ghost.setSpeed(Ghost.getBaseSpeed());
+		// Empty
 	}
 
 	@Override

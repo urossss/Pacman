@@ -49,7 +49,7 @@ public class GhostVulnerableState extends GhostState {
 	@Override
 	public void startImpl() {
 		this.ghost.setCanMoveThroughCageDoor(true);
-		this.ghost.setSpeed(Ghost.getBaseSpeed() * 0.9);
+		this.ghost.setSpeed(this.handler.getGame().getGhostVulnerableSpeed());
 
 		this.previousTime = System.currentTimeMillis();
 		this.timer = 0;

@@ -31,7 +31,7 @@ public class GhostDiedState extends GhostState {
 
 	@Override
 	public void startImpl() {
-		// Empty
+		this.ghost.setSpeed(this.handler.getGame().getGhostDiedSpeed());
 	}
 
 	@Override
