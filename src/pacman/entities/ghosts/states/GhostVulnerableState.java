@@ -18,6 +18,10 @@ public class GhostVulnerableState extends GhostState {
 	protected Map<Creature.Direction, Animation> animations1;
 	protected Map<Creature.Direction, Animation> animations2;
 
+	private long previousTime;
+	private long timer;
+	private int animationSwitchStartTime;
+
 	public GhostVulnerableState(Ghost ghost, Handler handler) {
 		super(ghost, handler);
 
@@ -46,11 +50,23 @@ public class GhostVulnerableState extends GhostState {
 	public void startImpl() {
 		this.ghost.setCanMoveThroughCageDoor(true);
 		this.ghost.setSpeed(Ghost.getBaseSpeed() * 0.9);
+
+		this.previousTime = System.currentTimeMillis();
+		this.timer = 0;
+		this.animationSwitchStartTime = this.handler.getGame().getGhostVulnerableStateDurationMillis() - 3000;
+
+		this.animations = this.animations1;
 	}
 
 	@Override
 	public void updateImpl() {
-		// todo: change animations between 1 and 2
+		long currentTime = System.currentTimeMillis();
+		this.timer += currentTime - this.previousTime;
+		this.previousTime = currentTime;
+
+		if (this.timer >= this.animationSwitchStartTime) {
+			this.animations = this.timer % 200 < 100 ? this.animations2 : this.animations1;
+		}
 	}
 
 	@Override

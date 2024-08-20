@@ -30,6 +30,10 @@ public abstract class Creature extends Entity {
 
 	protected abstract boolean canMoveThroughCageDoor();
 
+	public boolean isInCollisionWith(Creature c) {
+		return Math.abs(this.x - c.x) + Math.abs(this.y - c.y) <= 16;
+	}
+
 	public void move() {
 		// change the direction to the target (desired) direction if possible
 		Direction desiredDirection = this.calculateDesiredDirection();

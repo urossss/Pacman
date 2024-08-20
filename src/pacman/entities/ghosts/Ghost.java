@@ -14,12 +14,14 @@ public abstract class Ghost extends Creature {
 
 	protected final int scatterXTarget, scatterYTarget;
 	protected final int cageXTarget = 14, cageYTarget = 11;
+	protected final int diedXTarget = 14, diedYTarget = 14;
 
 	private int nextTileX, nextTileY;
 	private Direction nextDirection;
 
 	private boolean canMoveThroughCageDoor = false;
 	private long cageStateEndTime, vulnerableStateEndTime;
+	private int diedXTile, diedYTile, diedGhostIndex;
 
 	protected GhostState currentState;
 
@@ -27,6 +29,7 @@ public abstract class Ghost extends Creature {
 	protected GhostState scatterState;
 	protected GhostState chaseState;
 	protected GhostState vulnerableState;
+	protected GhostState diedState;
 
 	public Ghost(Handler handler, double x, double y, int scatterXTarget, int scatterYTarget) {
 		super(handler, x, y);
@@ -38,6 +41,7 @@ public abstract class Ghost extends Creature {
 		this.chaseState = new GhostChaseState(this, handler);
 		this.scatterState = new GhostScatterState(this, handler);
 		this.vulnerableState = new GhostVulnerableState(this, handler);
+		this.diedState = new GhostDiedState(this, handler);
 	}
 
 	public abstract int getGhostId();
@@ -203,6 +207,17 @@ public abstract class Ghost extends Creature {
 		this.vulnerableStateEndTime = System.currentTimeMillis() + this.handler.getGame().getGhostVulnerableStateDurationMillis();
 	}
 
+	public void startDiedState() {
+		this.diedXTile = this.getXTile();
+		this.diedYTile = this.getYTile();
+		this.diedGhostIndex = this.handler.getGame().getGhostsEatenCount();
+
+		this.vulnerableStateEndTime = -1;
+
+		this.currentState = this.diedState;
+		this.diedState.start();
+	}
+
 	public void startScatterOrChaseState() {
 		if (this.handler.getGame().isGhostScatterModeActive()) {
 			this.startScatterState();
@@ -227,8 +242,36 @@ public abstract class Ghost extends Creature {
 		return cageYTarget;
 	}
 
+	public int getDiedXTarget() {
+		return diedXTarget;
+	}
+
+	public int getDiedYTarget() {
+		return diedYTarget;
+	}
+
 	public void setCanMoveThroughCageDoor(boolean canMoveThroughCageDoor) {
 		this.canMoveThroughCageDoor = canMoveThroughCageDoor;
+	}
+
+	public int getDiedXTile() {
+		return diedXTile;
+	}
+
+	public int getDiedYTile() {
+		return diedYTile;
+	}
+
+	public int getDiedGhostIndex() {
+		return diedGhostIndex;
+	}
+
+	public boolean canBeEaten() {
+		return this.currentState instanceof GhostVulnerableState;
+	}
+
+	public boolean canEat() {
+		return this.currentState instanceof GhostScatterState || this.currentState instanceof GhostChaseState;
 	}
 
 	// static interface

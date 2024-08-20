@@ -1,6 +1,7 @@
 package pacman.core;
 
 import pacman.display.Display;
+import pacman.entities.ghosts.Ghost;
 import pacman.graphics.ImageAssets;
 import pacman.input.KeyManager;
 import pacman.states.StateManager;
@@ -42,6 +43,7 @@ public class Game implements Runnable {
 	private int livesLeft;
 	private boolean isNewHighScore = false;
 	private int currentLevel;
+	private int ghostsEatenCount;
 
 	private boolean ghostScatterModeActive = false;
 
@@ -266,6 +268,18 @@ public class Game implements Runnable {
 		}
 	}
 
+	public void powerPelletEaten() {
+		this.ghostsEatenCount = 0;
+		for (Ghost g : this.handler.getEntityManager().getGhosts()) {
+			g.startVulnerableState();
+		}
+	}
+
+	public void ghostEaten(Ghost g) {
+		g.startDiedState();
+		this.scorePoints((int) (200 * Math.pow(2, this.ghostsEatenCount++)));
+	}
+
 	// Getters
 
 	public int getScore() {
@@ -290,6 +304,10 @@ public class Game implements Runnable {
 
 	public boolean isGhostScatterModeActive() {
 		return ghostScatterModeActive;
+	}
+
+	public int getGhostsEatenCount() {
+		return ghostsEatenCount;
 	}
 
 	// Private implementation

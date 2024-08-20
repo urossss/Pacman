@@ -9,6 +9,8 @@ import java.util.*;
 
 public class EntityManager {
 
+	private Handler handler;
+
 	private Pacman pacman;
 
 	private Ghost blinky;
@@ -17,8 +19,11 @@ public class EntityManager {
 	private Ghost clyde;
 
 	private List<Entity> entities;
+	private List<Ghost> ghosts;
 
 	public EntityManager(Handler handler) {
+		this.handler = handler;
+
 		this.pacman = new Pacman(handler);
 
 		this.blinky = new BlinkyGhost(handler, 216, 176, 25, -3);
@@ -41,17 +46,32 @@ public class EntityManager {
 		this.entities.add(this.pinky);
 		this.entities.add(this.inky);
 		this.entities.add(this.clyde);
+
+		this.ghosts = new ArrayList<>();
+		this.ghosts.add(this.blinky);
+		this.ghosts.add(this.pinky);
+		this.ghosts.add(this.inky);
+		this.ghosts.add(this.clyde);
 	}
 
 	public void update() {
-//		this.pacman.update(); // updated below
 		for (Entity e : this.entities) {
 			e.update();
+		}
+
+		for (Ghost g : this.ghosts) {
+			if (pacman.isInCollisionWith(g)) {
+				if (g.canEat()) { // the ghost eats pacman
+					this.handler.getStateManager().startPacmanDiedState();
+				}
+				if (g.canBeEaten()) { // pacman easts the ghost
+					this.handler.getGame().ghostEaten(g);
+				}
+			}
 		}
 	}
 
 	public void render(Graphics g) {
-//		this.pacman.render(g); // rendered below
 		for (Entity e : this.entities) {
 			e.render(g);
 		}
@@ -77,4 +97,7 @@ public class EntityManager {
 		return clyde;
 	}
 
+	public List<Ghost> getGhosts() {
+		return ghosts;
+	}
 }

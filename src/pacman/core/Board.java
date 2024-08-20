@@ -126,10 +126,7 @@ public class Board {
 
 			// start ghosts vulnerable mode when power food is eaten
 			if (this.tiles[x][y] instanceof PowerFoodTile) {
-				this.handler.getEntityManager().getBlinky().startVulnerableState();
-				this.handler.getEntityManager().getPinky().startVulnerableState();
-				this.handler.getEntityManager().getInky().startVulnerableState();
-				this.handler.getEntityManager().getClyde().startVulnerableState();
+				this.handler.getGame().powerPelletEaten();
 			}
 
 			// clear the tile

@@ -50,11 +50,11 @@ public class GamePlayState extends State {
 			return;
 		}
 
-		if (this.handler.getEntityManager().getPacman().getYTile() == 5) { // todo: fix this test condition
-			this.handler.getStateManager().startPacmanDiedState();
-			this.resetGamePlay();
-			return;
-		}
+//		if (this.handler.getEntityManager().getPacman().getYTile() == 5) { // todo: fix this test condition
+//			this.handler.getStateManager().startPacmanDiedState();
+//			this.resetGamePlay();
+//			return;
+//		}
 	}
 
 	@Override

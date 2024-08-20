@@ -41,6 +41,10 @@ public abstract class GhostState {
 
 	public abstract Coordinates calculateTarget();
 
+	protected void renderImpl(Graphics g) {
+		// Empty, can be overriden in specific states
+	}
+
 	public void start() {
 		this.ghost.setCanMoveThroughCageDoor(false);
 		this.startImpl();
@@ -63,6 +67,8 @@ public abstract class GhostState {
 		g.drawRect((int) this.ghost.getX(), (int) this.ghost.getY(), Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
 		g.setColor(Color.green);
 		g.drawRect(this.ghost.getXTile() * Tile.TILE_WIDTH, this.ghost.getYTile() * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+
+		this.renderImpl(g);
 	}
 
 	private void updateAnimations() {
