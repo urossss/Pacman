@@ -24,6 +24,6 @@ public class ClydeGhost extends Ghost {
 
 	@Override
 	public int getMaxCageTimeMillis() {
-		return 4000;
+		return 3000;
 	}
 }

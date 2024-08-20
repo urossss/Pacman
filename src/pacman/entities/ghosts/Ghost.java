@@ -2,10 +2,7 @@ package pacman.entities.ghosts;
 
 import pacman.core.Handler;
 import pacman.entities.Creature;
-import pacman.entities.ghosts.states.GhostCageState;
-import pacman.entities.ghosts.states.GhostScatterState;
-import pacman.entities.ghosts.states.GhostState;
-import pacman.entities.ghosts.states.GhostVulnerableState;
+import pacman.entities.ghosts.states.*;
 import pacman.tiles.Coordinates;
 
 import java.awt.*;
@@ -22,6 +19,7 @@ public abstract class Ghost extends Creature {
 	private Direction nextDirection;
 
 	private boolean canMoveThroughCageDoor = false;
+	private long cageStateEndTime, vulnerableStateEndTime;
 
 	protected GhostState currentState;
 
@@ -37,7 +35,7 @@ public abstract class Ghost extends Creature {
 		this.scatterYTarget = scatterYTarget;
 
 		this.cageState = new GhostCageState(this, handler);
-//		this.chaseState = new GhostChaseState(this, handler);
+		this.chaseState = new GhostChaseState(this, handler);
 		this.scatterState = new GhostScatterState(this, handler);
 		this.vulnerableState = new GhostVulnerableState(this, handler);
 	}
@@ -142,17 +140,32 @@ public abstract class Ghost extends Creature {
 
 	@Override
 	public boolean canMoveThroughCageDoor() {
-		return this.canMoveThroughCageDoor;
+		// when can a ghost move through cage door
+		// - if it is outside the cage
+		//   - only if it is in GhostDiedState
+		// - if it is inside the cage
+		//   - this can be in GhostCageState, or in GhostVulnerableState if the Pacman eats power pellet
+		//     before the ghost left the Cage mode
+		//   - only if canMoveThroughCageDoor is set to true
+
+		boolean isInsideTheCage = this.handler.getBoard().isTileInsideGhostCage(this.getXTile(), this.getYTile());
+
+		if (isInsideTheCage) {
+			return this.canMoveThroughCageDoor;
+		} else {
+			return this.currentState instanceof GhostDiedState;
+		}
 	}
 
 	// public interface
 
 	@Override
 	public void update() {
-		this.move();
+		timerUpdates();
 		if (this.currentState != null) {
 			this.currentState.update();
 		}
+		this.move();
 	}
 
 	@Override
@@ -162,9 +175,14 @@ public abstract class Ghost extends Creature {
 		}
 	}
 
-	public void startCageState() {
+	public void startCageState(int duration) {
 		this.currentState = this.cageState;
 		this.cageState.start();
+		this.cageStateEndTime = System.currentTimeMillis() + duration;
+	}
+
+	public void startCageState() {
+		this.startCageState(this.getMaxCageTimeMillis());
 	}
 
 	public void startScatterState() {
@@ -175,13 +193,22 @@ public abstract class Ghost extends Creature {
 
 	public void startChaseState() {
 //		System.out.println("startChaseState " + getGhostId());
-//		this.currentState = this.chaseState;
-//		this.chaseState.start();
+		this.currentState = this.chaseState;
+		this.chaseState.start();
 	}
 
 	public void startVulnerableState() {
 		this.currentState = this.vulnerableState;
 		this.vulnerableState.start();
+		this.vulnerableStateEndTime = System.currentTimeMillis() + this.handler.getGame().getGhostVulnerableStateDurationMillis();
+	}
+
+	public void startScatterOrChaseState() {
+		if (this.handler.getGame().isGhostScatterModeActive()) {
+			this.startScatterState();
+		} else {
+			this.startChaseState();
+		}
 	}
 
 	public int getScatterXTarget() {
@@ -240,4 +267,19 @@ public abstract class Ghost extends Creature {
 		}
 	}
 
+	private void timerUpdates() {
+		long currentTime = System.currentTimeMillis();
+
+		// get out of cage state
+		if (this.cageStateEndTime > 0 && currentTime > this.cageStateEndTime) {
+			this.cageStateEndTime = -1;
+			this.setCanMoveThroughCageDoor(true);
+		}
+
+		// get out of vulnerable state
+		if (this.vulnerableStateEndTime > 0 && currentTime > this.vulnerableStateEndTime) {
+			this.vulnerableStateEndTime = -1;
+			this.startScatterOrChaseState();
+		}
+	}
 }

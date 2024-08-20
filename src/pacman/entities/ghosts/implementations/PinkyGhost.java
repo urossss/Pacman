@@ -43,6 +43,6 @@ public class PinkyGhost extends Ghost {
 
 	@Override
 	public int getMaxCageTimeMillis() {
-		return 2000;
+		return 1000;
 	}
 }

@@ -35,11 +35,16 @@ public abstract class GhostState {
 		this.animations.put(Creature.Direction.RIGHT, new Animation(50, ImageAssets.ghost_right[id]));
 	}
 
-	public abstract void start();
+	public abstract void startImpl();
 
 	public abstract void updateImpl();
 
 	public abstract Coordinates calculateTarget();
+
+	public void start() {
+		this.ghost.setCanMoveThroughCageDoor(false);
+		this.startImpl();
+	}
 
 	public void update() {
 		this.updateImpl();

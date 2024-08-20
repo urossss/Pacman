@@ -3,10 +3,7 @@ package pacman.core;
 import pacman.entities.Creature.Direction;
 import pacman.entities.EntityManager;
 import pacman.graphics.ImageAssets;
-import pacman.tiles.Coordinates;
-import pacman.tiles.PowerFoodTile;
-import pacman.tiles.Tile;
-import pacman.tiles.TileManager;
+import pacman.tiles.*;
 import pacman.utils.Utils;
 
 import java.awt.*;
@@ -129,7 +126,10 @@ public class Board {
 
 			// start ghosts vulnerable mode when power food is eaten
 			if (this.tiles[x][y] instanceof PowerFoodTile) {
-				// todo
+				this.handler.getEntityManager().getBlinky().startVulnerableState();
+				this.handler.getEntityManager().getPinky().startVulnerableState();
+				this.handler.getEntityManager().getInky().startVulnerableState();
+				this.handler.getEntityManager().getClyde().startVulnerableState();
 			}
 
 			// clear the tile
@@ -138,8 +138,14 @@ public class Board {
 			 // reduce food counter and create the Fruit object if needed
 			this.foodLeft--;
 			this.foodEaten++;
-			// todo: create Fruits if enough food has been eaten
 		}
+	}
+
+	public boolean isTileInsideGhostCage(int x, int y) {
+		if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
+			return false;
+		}
+		return this.tiles[x][y] instanceof CageInsideTile;
 	}
 
 	public boolean isCompleted() {

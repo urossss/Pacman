@@ -43,7 +43,7 @@ public class Game implements Runnable {
 	private boolean isNewHighScore = false;
 	private int currentLevel;
 
-	private boolean isGhostScatterModeActive = false;
+	private boolean ghostScatterModeActive = false;
 
 	public Game() {
 
@@ -248,6 +248,24 @@ public class Game implements Runnable {
 		this.writeHighScore();
 	}
 
+	public void setGhostScatterModeActive(boolean ghostScatterModeActive) {
+		this.ghostScatterModeActive = ghostScatterModeActive;
+	}
+
+	public void increaseCurrentLevel() {
+		this.currentLevel++;
+	}
+
+	public int getGhostVulnerableStateDurationMillis() {
+		switch (this.currentLevel) {
+			case 1: return 8000;
+			case 2: return 7000;
+			case 3: return 6000;
+			case 4: return 5000;
+			default: return 4000;
+		}
+	}
+
 	// Getters
 
 	public int getScore() {
@@ -271,7 +289,7 @@ public class Game implements Runnable {
 	}
 
 	public boolean isGhostScatterModeActive() {
-		return isGhostScatterModeActive;
+		return ghostScatterModeActive;
 	}
 
 	// Private implementation

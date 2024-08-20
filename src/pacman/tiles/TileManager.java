@@ -11,7 +11,8 @@ public class TileManager {
 			new WallTile(1),
 			new FoodTile(2),
 			new PowerFoodTile(3),
-			new CageDoorTile(4)
+			new CageDoorTile(4),
+			new CageInsideTile(5)
 		};
 	}
 

@@ -80,6 +80,10 @@ public class GamePlayState extends State {
 		int level = this.handler.getGame().getCurrentLevel();
 
 		// TODO: scatter/chase mode switching on timer based on level
+
+		if (this.timer >= 10000) {
+			this.handler.getGame().setGhostScatterModeActive(true);
+		}
 	}
 
 }

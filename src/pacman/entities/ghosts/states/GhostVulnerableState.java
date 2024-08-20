@@ -43,7 +43,8 @@ public class GhostVulnerableState extends GhostState {
 	}
 
 	@Override
-	public void start() {
+	public void startImpl() {
+		this.ghost.setCanMoveThroughCageDoor(true);
 		this.ghost.setSpeed(Ghost.getBaseSpeed() * 0.9);
 	}
 
@@ -54,6 +55,11 @@ public class GhostVulnerableState extends GhostState {
 
 	@Override
 	public Coordinates calculateTarget() {
+		// if the ghost is inside the cage while vulnerable, just get out asap
+		if (this.handler.getBoard().isTileInsideGhostCage(this.ghost.getXTile(), this.ghost.getYTile())) {
+			return new Coordinates(14, 11);
+		}
+
 		int xTarget = random.nextInt(28);
 		int yTarget = random.nextInt(31);
 		return new Coordinates(xTarget, yTarget);

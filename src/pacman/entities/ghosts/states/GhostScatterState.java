@@ -15,13 +15,15 @@ public class GhostScatterState extends GhostState {
 	}
 
 	@Override
-	public void start() {
+	public void startImpl() {
 		this.ghost.setSpeed(Ghost.getBaseSpeed());
 	}
 
 	@Override
 	public void updateImpl() {
-		// empty
+		if (!this.handler.getGame().isGhostScatterModeActive()) {
+			this.ghost.startChaseState();
+		}
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class GhostCageState extends GhostState {
 	}
 
 	@Override
-	public void start() {
+	public void startImpl() {
 		this.previousTime = System.currentTimeMillis();
 		this.timer = 0;
 //		System.out.println("GhostCageState start " + this.ghost.getGhostId() + " " + this.previousTime);
@@ -30,22 +30,18 @@ public class GhostCageState extends GhostState {
 	public void updateImpl() {
 		if (this.ghost.getXTile() == this.cageTarget.x && this.ghost.getYTile() == this.cageTarget.y) {
 			this.ghost.setCanMoveThroughCageDoor(false);
-			if (this.handler.getGame().isGhostScatterModeActive()) {
-				this.ghost.startScatterState();
-			} else {
-				this.ghost.startScatterState(); // TODO: startChaseState
-			}
+			this.ghost.startScatterOrChaseState();
 			return;
 		}
 
-		long currentTime = System.currentTimeMillis();
-		this.timer += currentTime - this.previousTime;
-		this.previousTime = currentTime;
-
-		if (this.timer >= this.maxCageTime) {
-			this.ghost.setCanMoveThroughCageDoor(true);
-//			System.out.println("cage mode over " + this.ghost.getGhostId() + " " + this.previousTime);
-		}
+//		long currentTime = System.currentTimeMillis();
+//		this.timer += currentTime - this.previousTime;
+//		this.previousTime = currentTime;
+//
+//		if (this.timer >= this.maxCageTime) {
+//			this.ghost.setCanMoveThroughCageDoor(true);
+////			System.out.println("cage mode over " + this.ghost.getGhostId() + " " + this.previousTime);
+//		}
 	}
 
 	@Override

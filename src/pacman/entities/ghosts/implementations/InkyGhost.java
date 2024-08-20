@@ -24,6 +24,6 @@ public class InkyGhost extends Ghost {
 
 	@Override
 	public int getMaxCageTimeMillis() {
-		return 3000;
+		return 2000;
 	}
 }
