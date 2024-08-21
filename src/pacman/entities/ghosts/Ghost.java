@@ -135,10 +135,6 @@ public abstract class Ghost extends Creature {
 			default: // index == -1 means no change in direction
 		}
 
-//		if (desiredDirection != this.currentDirection) {
-//			System.out.println("Current: " + this.currentDirection + " -> desired: " + desiredDirection);
-//		}
-
 		this.setNextTileAndDirection(desiredDirection);
 
 		return desiredDirection;
@@ -205,13 +201,11 @@ public abstract class Ghost extends Creature {
 	}
 
 	public void startScatterState() {
-//		System.out.println("startScatterState " + getGhostId());
 		this.currentState = this.scatterState;
 		this.scatterState.start();
 	}
 
 	public void startChaseState() {
-//		System.out.println("startChaseState " + getGhostId());
 		this.currentState = this.chaseState;
 		this.chaseState.start();
 	}

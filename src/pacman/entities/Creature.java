@@ -31,7 +31,7 @@ public abstract class Creature extends Entity {
 	protected abstract boolean canMoveThroughCageDoor();
 
 	public boolean isInCollisionWith(Creature c) {
-		return Math.abs(this.x - c.x) + Math.abs(this.y - c.y) <= 16;
+		return Math.abs(this.x - c.x) + Math.abs(this.y - c.y) <= 20;
 	}
 
 	public void move() {

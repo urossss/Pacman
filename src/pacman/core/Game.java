@@ -341,7 +341,6 @@ public class Game implements Runnable {
 	}
 
 	public int[] getScatterChaseSwitchTimesInSeconds() {
-		System.out.println("getScatterChaseSwitchTimesInSeconds for level " + this.currentLevel);
 		switch (this.currentLevel) {
 			case 1: return new int[]{ 7, 20, 7, 20, 5, 20, 5, Integer.MAX_VALUE };
 			case 2:

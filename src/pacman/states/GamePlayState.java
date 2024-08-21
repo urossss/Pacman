@@ -69,10 +69,6 @@ public class GamePlayState extends State {
 		this.handler.getBoard().render(g, true);
 	}
 
-	public void setResumeStatus(boolean isResumed) {
-		this.isGameResumed = isResumed;
-	}
-
 	// private implementation
 
 	private void resetGamePlay() {
@@ -101,7 +97,6 @@ public class GamePlayState extends State {
 		if (this.timer >= this.scatterChaseNextSwitchTime) {
 			this.scatterModeActive = !this.scatterModeActive;
 			this.handler.getGame().setGhostScatterModeActive(this.scatterModeActive);
-			System.out.println("scatter mode active: " + this.scatterModeActive + " timer: " + this.timer);
 
 			this.scatterChaseSwitchIndex++;
 			if (this.scatterChaseSwitchTimes.length > this.scatterChaseSwitchIndex) {
