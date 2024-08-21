@@ -21,7 +21,7 @@ public class GamePlayState extends State {
 	}
 
 	@Override
-	public void startImpl() {
+	protected void startImpl() {
 		this.isGameResumed = false;
 		this.previousTime = System.currentTimeMillis();
 
@@ -35,7 +35,7 @@ public class GamePlayState extends State {
 	}
 
 	@Override
-	public void updateImpl() {
+	protected void updateImpl() {
 		// Pause the game if space key was pressed, but:
 		// - ignore presses in first 0.5 seconds after starting this state
 		// - only react once to key holds
@@ -56,16 +56,10 @@ public class GamePlayState extends State {
 			this.resetGamePlay();
 			return;
 		}
-
-//		if (this.handler.getEntityManager().getPacman().getYTile() == 5) { // todo: fix this test condition
-//			this.handler.getStateManager().startPacmanDiedState();
-//			this.resetGamePlay();
-//			return;
-//		}
 	}
 
 	@Override
-	public void renderImpl(Graphics g) {
+	protected void renderImpl(Graphics g) {
 		this.handler.getBoard().render(g, true);
 	}
 

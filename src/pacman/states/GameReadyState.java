@@ -20,7 +20,7 @@ public class GameReadyState extends State {
 	}
 
 	@Override
-	public void startImpl() {
+	protected void startImpl() {
 		if (this.handler.getBoard().isCompleted()) {
 			this.handler.setBoard(new Board(this.handler));
 		} else {
@@ -33,7 +33,7 @@ public class GameReadyState extends State {
 	}
 
 	@Override
-	public void updateImpl() {
+	protected void updateImpl() {
 		long currentTime = System.currentTimeMillis();
 		this.timer += currentTime - this.previousTime;
 		this.previousTime = currentTime;
@@ -49,7 +49,7 @@ public class GameReadyState extends State {
 	}
 
 	@Override
-	public void renderImpl(Graphics g) {
+	protected void renderImpl(Graphics g) {
 		if (this.timer < T1) {
 			this.handler.getBoard().render(g, false);
 		} else {

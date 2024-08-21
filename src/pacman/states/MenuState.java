@@ -35,7 +35,7 @@ public class MenuState extends State {
 	}
 
 	@Override
-	public void startImpl() {
+	protected void startImpl() {
 		this.handler.getGame().restartGame();
 
 		this.titleLoaded = false;
@@ -64,7 +64,7 @@ public class MenuState extends State {
 	}
 
 	@Override
-	public void updateImpl() {
+	protected void updateImpl() {
 		if (this.titleLoaded && this.handler.getKeyManager().space) {
 			this.handler.getStateManager().startGameReadyState();
 			return;
@@ -106,7 +106,7 @@ public class MenuState extends State {
 	}
 
 	@Override
-	public void renderImpl(Graphics g) {
+	protected void renderImpl(Graphics g) {
 		g.drawImage(ImageAssets.title, xTitle, yTitle, 350, 90, null);
 
 		if (this.pressSpaceVisible) {

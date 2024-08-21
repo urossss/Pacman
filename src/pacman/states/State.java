@@ -94,10 +94,10 @@ public abstract class State {
 		}
 	}
 
-	public abstract void startImpl();
+	protected abstract void startImpl();
 
-	public abstract void updateImpl();
+	protected abstract void updateImpl();
 
-	public abstract void renderImpl(Graphics g);
+	protected abstract void renderImpl(Graphics g);
 
 }

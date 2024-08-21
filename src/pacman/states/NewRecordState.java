@@ -29,7 +29,7 @@ public class NewRecordState extends State {
 	}
 
 	@Override
-	public void startImpl() {
+	protected void startImpl() {
 		this.timer = 0;
 		this.delta = 0;
 		this.previousTime = System.currentTimeMillis();
@@ -45,7 +45,7 @@ public class NewRecordState extends State {
 	}
 
 	@Override
-	public void updateImpl() {
+	protected void updateImpl() {
 		long currentTime = System.currentTimeMillis();
 		this.timer += currentTime - this.previousTime;
 		this.delta += currentTime - this.previousTime;
@@ -94,7 +94,7 @@ public class NewRecordState extends State {
 	}
 
 	@Override
-	public void renderImpl(Graphics g) {
+	protected void renderImpl(Graphics g) {
 		if (this.newRecordVisible) {
 			TextRenderer.drawTextCenterAligned(g, "new record", 180, 35);
 		}

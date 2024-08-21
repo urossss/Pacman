@@ -78,15 +78,15 @@ public class Game implements Runnable {
 
 			// Tick the game if it's time for it
 			if (currentNanoTime >= nextGameTick) {
-				currentTickCount++;
-				totalTickCount++;
-
 				this.update();
 				this.render();
 
 				nextGameTick += TIME_PER_TICK;
 
 				if (PERF_TRACKING_ENABLED) {
+					currentTickCount++;
+					totalTickCount++;
+
 					lastTickLength = System.nanoTime() - currentNanoTime;
 					totalTickLength += lastTickLength;
 					maxTickLength = Math.max(maxTickLength, lastTickLength);

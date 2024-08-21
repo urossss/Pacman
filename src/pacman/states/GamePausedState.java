@@ -12,12 +12,12 @@ public class GamePausedState extends State {
 	}
 
 	@Override
-	public void startImpl() {
-
+	protected void startImpl() {
+		// Empty
 	}
 
 	@Override
-	public void updateImpl() {
+	protected void updateImpl() {
 		// Resume the game if space key was pressed, but:
 		// - ignore presses in first 0.5 seconds after starting this state
 		// - only react once to key holds
@@ -32,7 +32,7 @@ public class GamePausedState extends State {
 	}
 
 	@Override
-	public void renderImpl(Graphics g) {
+	protected void renderImpl(Graphics g) {
 		this.handler.getBoard().render(g, true);
 		TextRenderer.drawTextCenterAligned(g, "paused", 327, 15);
 	}

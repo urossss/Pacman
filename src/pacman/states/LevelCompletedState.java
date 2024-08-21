@@ -23,7 +23,7 @@ public class LevelCompletedState extends State {
 	}
 
 	@Override
-	public void startImpl() {
+	protected void startImpl() {
 		this.mapAnimation = new Animation(250, new BufferedImage[]{ ImageAssets.map1, ImageAssets.map2 });
 
 		this.timer = 0;
@@ -32,7 +32,7 @@ public class LevelCompletedState extends State {
 	}
 
 	@Override
-	public void updateImpl() {
+	protected void updateImpl() {
 		this.mapAnimation.update();
 
 		long currentTime = System.currentTimeMillis();
@@ -50,7 +50,7 @@ public class LevelCompletedState extends State {
 	}
 
 	@Override
-	public void renderImpl(Graphics g) {
+	protected void renderImpl(Graphics g) {
 		g.translate(0, Game.GAME_TOP_SECTION_HEIGHT_PIXELS);
 
 		g.drawImage(this.mapAnimation.getCurrentFrame(), 0, 0, Game.GAME_BOARD_WIDTH_PIXELS, Game.GAME_BOARD_HEIGHT_PIXELS, null);

@@ -21,7 +21,7 @@ public class PacmanDiedState extends State {
 	}
 
 	@Override
-	public void startImpl() {
+	protected void startImpl() {
 		this.pacmanDiedAnimation = new Animation(ANIMATION_SPEED, ImageAssets.pacman_eaten);
 		this.animationDuration = ANIMATION_SPEED * ImageAssets.pacman_eaten.length;
 
@@ -30,7 +30,7 @@ public class PacmanDiedState extends State {
 	}
 
 	@Override
-	public void updateImpl() {
+	protected void updateImpl() {
 		long currentTime = System.currentTimeMillis();
 		this.timer += currentTime - this.previousTime;
 		this.previousTime = currentTime;
@@ -50,7 +50,7 @@ public class PacmanDiedState extends State {
 	}
 
 	@Override
-	public void renderImpl(Graphics g) {
+	protected void renderImpl(Graphics g) {
 		this.handler.getBoard().render(g, false);
 
 		g.translate(0, Game.GAME_TOP_SECTION_HEIGHT_PIXELS);
