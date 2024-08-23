@@ -19,7 +19,7 @@ public class ImageAssets {
 	public static BufferedImage[] ghost_eaten_points;
 
 	public static void init() {
-		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/res/textures/sheet.png"));
+		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
 
 		title = sheet.crop(0, 0, 182, 46);
 		ready = sheet.crop(0, 286, 44, 7);

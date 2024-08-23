@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class Board {
 
-	private static final String DefaultMapPath = "src/res/maps/map.txt";
+	private static final String DefaultMapPath = "/maps/map.txt";
 
 	private int width, height;
 	private Tile[][] tiles;

@@ -7,6 +7,6 @@
 # Don't ignore .gitignore, pacman package and sprite sheet
 !.gitignore
 !/src/pacman/**
-!/src/res/icon/*
-!/src/res/maps/map.txt
-!/src/res/textures/sheet.png
+!/resources/icon/*
+!/resources/maps/map.txt
+!/resources/textures/sheet.png

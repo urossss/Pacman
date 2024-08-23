@@ -8,13 +8,15 @@ public class Utils {
 		StringBuilder builder = new StringBuilder();
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(path));
+			InputStream inputStream = Utils.class.getResourceAsStream(path);
+			Reader reader = new InputStreamReader(inputStream);
+			BufferedReader bufferedReader = new BufferedReader(reader);
 
 			String line;
-			while ((line = br.readLine()) != null) {
+			while ((line = bufferedReader.readLine()) != null) {
 				builder.append(line).append('\n');
 			}
-			br.close();
+			bufferedReader.close();
 		} catch (Exception e) {
 //			e.printStackTrace();
 			return null;
