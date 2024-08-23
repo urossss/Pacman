@@ -17,9 +17,14 @@ public class ClydeGhost extends Ghost {
 	}
 
 	@Override
-	public Coordinates getChaseTarget() { // TODO: fix the algorithm
+	public Coordinates getChaseTarget() {
 		Creature pacman = this.handler.getEntityManager().getPacman();
-		return new Coordinates(pacman.getXTile(), pacman.getYTile());
+		double distanceToPacman = this.distance(this.getXTile(), this.getYTile(), pacman.getXTile(), pacman.getYTile());
+		if (distanceToPacman >= 8) {
+			return new Coordinates(pacman.getXTile(), pacman.getYTile());
+		} else {
+			return this.scatterTarget;
+		}
 	}
 
 	@Override

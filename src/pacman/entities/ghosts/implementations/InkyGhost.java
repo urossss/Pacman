@@ -17,9 +17,18 @@ public class InkyGhost extends Ghost {
 	}
 
 	@Override
-	public Coordinates getChaseTarget() { // TODO: fix the algorithm
+	public Coordinates getChaseTarget() {
 		Creature pacman = this.handler.getEntityManager().getPacman();
-		return new Coordinates(pacman.getXTile(), pacman.getYTile());
+		int pacmanXTile = pacman.getXTile();
+		int pacmanYTile = pacman.getYTile();
+		Creature blinky = this.handler.getEntityManager().getBlinky();
+		int blinkyXTile = blinky.getXTile();
+		int blinkyYTile = blinky.getYTile();
+
+		int targetXTile = pacmanXTile + (pacmanXTile - blinkyXTile);
+		int targetYTile = pacmanYTile + (pacmanYTile - blinkyYTile);
+
+		return new Coordinates(targetXTile, targetYTile);
 	}
 
 	@Override

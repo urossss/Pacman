@@ -276,7 +276,7 @@ public abstract class Ghost extends Creature {
 
 	// helper methods
 
-	private double distance(int x1, int y1, int x2, int y2) {
+	protected double distance(int x1, int y1, int x2, int y2) {
 		return Math.hypot(x1 - x2, y1 - y2);
 	}
 
