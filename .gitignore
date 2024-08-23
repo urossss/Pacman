@@ -4,9 +4,12 @@
 # Don't ignore folders
 !*/
 
-# Don't ignore .gitignore, pacman package and sprite sheet
+# Don't ignore .gitignore, pacman source package and resources
 !.gitignore
 !/src/pacman/**
 !/resources/icon/*
 !/resources/maps/map.txt
 !/resources/textures/sheet.png
+
+# Don't ignore jar artifact
+!/out/artifacts/pacman/pacman.jar
