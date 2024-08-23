@@ -7,8 +7,8 @@ import pacman.tiles.Coordinates;
 
 public class BlinkyGhost extends Ghost {
 
-	public BlinkyGhost(Handler handler, double x, double y, int scatterXTarget, int scatterYTarget) {
-		super(handler, x, y, scatterXTarget, scatterYTarget);
+	public BlinkyGhost(Handler handler, double x, double y) {
+		super(handler, x, y, new Coordinates(25, -3));
 	}
 
 	@Override

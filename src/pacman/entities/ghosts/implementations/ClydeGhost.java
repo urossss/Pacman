@@ -7,8 +7,8 @@ import pacman.tiles.Coordinates;
 
 public class ClydeGhost extends Ghost {
 
-	public ClydeGhost(Handler handler, double x, double y, int scatterXTarget, int scatterYTarget) {
-		super(handler, x, y, scatterXTarget, scatterYTarget);
+	public ClydeGhost(Handler handler, double x, double y) {
+		super(handler, x, y, new Coordinates(0, 32));
 	}
 
 	@Override

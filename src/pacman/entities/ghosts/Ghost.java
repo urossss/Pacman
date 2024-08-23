@@ -12,9 +12,9 @@ public abstract class Ghost extends Creature {
 
 	public static final double GHOST_MAX_SPEED = 2.5;
 
-	protected final int scatterXTarget, scatterYTarget;
-	protected final int cageXTarget = 14, cageYTarget = 11;
-	protected final int diedXTarget = 14, diedYTarget = 14;
+	protected final Coordinates scatterTarget;
+	protected final Coordinates cageTarget = new Coordinates(14, 11);
+	protected final Coordinates diedTarget = new Coordinates(14, 14);
 
 	private int nextTileX, nextTileY;
 	private Direction nextDirection;
@@ -33,11 +33,10 @@ public abstract class Ghost extends Creature {
 	protected GhostState vulnerableState;
 	protected GhostState diedState;
 
-	public Ghost(Handler handler, double x, double y, int scatterXTarget, int scatterYTarget) {
+	public Ghost(Handler handler, double x, double y, Coordinates scatterTarget) {
 		super(handler, x, y);
 
-		this.scatterXTarget = scatterXTarget;
-		this.scatterYTarget = scatterYTarget;
+		this.scatterTarget = scatterTarget;
 
 		this.cageState = new GhostCageState(this, handler);
 		this.chaseState = new GhostChaseState(this, handler);
@@ -190,6 +189,8 @@ public abstract class Ghost extends Creature {
 		}
 	}
 
+	// ghost state management
+
 	public void startCageState(int duration) {
 		this.currentState = this.cageState;
 		this.cageState.start();
@@ -235,28 +236,18 @@ public abstract class Ghost extends Creature {
 		}
 	}
 
-	public int getScatterXTarget() {
-		return scatterXTarget;
+	// ghost movement
+
+	public Coordinates getScatterTarget() {
+		return scatterTarget;
 	}
 
-	public int getScatterYTarget() {
-		return scatterYTarget;
+	public Coordinates getCageTarget() {
+		return cageTarget;
 	}
 
-	public int getCageXTarget() {
-		return cageXTarget;
-	}
-
-	public int getCageYTarget() {
-		return cageYTarget;
-	}
-
-	public int getDiedXTarget() {
-		return diedXTarget;
-	}
-
-	public int getDiedYTarget() {
-		return diedYTarget;
+	public Coordinates getDiedTarget() {
+		return diedTarget;
 	}
 
 	public void setCanMoveThroughCageDoor(boolean canMoveThroughCageDoor) {

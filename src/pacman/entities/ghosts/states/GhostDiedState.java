@@ -18,7 +18,7 @@ public class GhostDiedState extends GhostState {
 	public GhostDiedState(Ghost ghost, Handler handler) {
 		super(ghost, handler);
 
-		this.diedTarget = new Coordinates(this.ghost.getDiedXTarget(), this.ghost.getDiedYTarget());
+		this.diedTarget = ghost.getDiedTarget();
 	}
 
 	@Override

@@ -6,12 +6,8 @@ import pacman.tiles.Coordinates;
 
 public class GhostScatterState extends GhostState {
 
-	private Coordinates scatterTarget;
-
 	public GhostScatterState(Ghost ghost, Handler handler) {
 		super(ghost, handler);
-
-		this.scatterTarget = new Coordinates(this.ghost.getScatterXTarget(), this.ghost.getScatterYTarget());
 	}
 
 	@Override
@@ -28,6 +24,6 @@ public class GhostScatterState extends GhostState {
 
 	@Override
 	public Coordinates calculateTarget() {
-		return this.scatterTarget;
+		return this.ghost.getScatterTarget();
 	}
 }

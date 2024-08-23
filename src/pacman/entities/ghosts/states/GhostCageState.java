@@ -11,7 +11,7 @@ public class GhostCageState extends GhostState {
 	public GhostCageState(Ghost ghost, Handler handler) {
 		super(ghost, handler);
 
-		this.cageTarget = new Coordinates(this.ghost.getCageXTarget(), this.ghost.getCageYTarget());
+		this.cageTarget = ghost.getCageTarget();
 	}
 
 	@Override
@@ -30,6 +30,6 @@ public class GhostCageState extends GhostState {
 
 	@Override
 	public Coordinates calculateTarget() {
-		return this.cageTarget;
+		return this.ghost.getCageTarget();
 	}
 }

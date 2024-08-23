@@ -26,19 +26,10 @@ public class EntityManager {
 
 		this.pacman = new Pacman(handler);
 
-		this.blinky = new BlinkyGhost(handler, 216, 176, 25, -3);
-//		this.blinky.startScatterState();
-
-		this.pinky = new PinkyGhost(handler, 186, 232, 2, -3);
-//		this.pinky = new PinkyGhost(handler, 216, 176, 4, 14);
-//		this.pinky.startCageState();
-//		this.pinky.setCanMoveThroughCageDoor(true);
-
-		this.inky = new InkyGhost(handler, 210, 210, 27, 32);
-//		this.inky.startCageState();
-
-		this.clyde = new ClydeGhost(handler, 246, 220, 0, 32);
-//		this.clyde.startCageState();
+		this.blinky = new BlinkyGhost(handler, 216, 176);
+		this.pinky = new PinkyGhost(handler, 186, 232);
+		this.inky = new InkyGhost(handler, 210, 210);
+		this.clyde = new ClydeGhost(handler, 246, 220);
 
 		this.entities = new ArrayList<>();
 		this.entities.add(this.pacman);
