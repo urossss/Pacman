@@ -156,7 +156,7 @@ public class Board {
 	// Board implementation
 
 	private void loadMap(String path) {
-		String file = Utils.loadFileAsString(path);
+		String file = Utils.loadFileFromClasspathAsString(path);
 		String[] tokens = file.split("\\s+");
 		this.width = Utils.parseInt(tokens[0]);
 		this.height = Utils.parseInt(tokens[1]);

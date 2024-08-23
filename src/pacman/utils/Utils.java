@@ -4,7 +4,7 @@ import java.io.*;
 
 public class Utils {
 
-	public static String loadFileAsString(String path) {
+	public static String loadFileFromClasspathAsString(String path) {
 		StringBuilder builder = new StringBuilder();
 
 		try {
@@ -18,7 +18,24 @@ public class Utils {
 			}
 			bufferedReader.close();
 		} catch (Exception e) {
-//			e.printStackTrace();
+			return null;
+		}
+
+		return builder.toString();
+	}
+
+	public static String loadFileFromDiskAsString(String path) {
+		StringBuilder builder = new StringBuilder();
+
+		try {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
+
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				builder.append(line).append('\n');
+			}
+			bufferedReader.close();
+		} catch (Exception e) {
 			return null;
 		}
 

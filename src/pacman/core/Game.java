@@ -385,7 +385,7 @@ public class Game implements Runnable {
 	// Reads high score and high score player name from score.txt if the file exists and if it has the right format
 	private void readHighScore() {
 		try {
-			String file = Utils.loadFileAsString(this.SCORE_FILE_PATH);
+			String file = Utils.loadFileFromDiskAsString(this.SCORE_FILE_PATH);
 			String[] tokens = file.split("\\s+");
 			this.highScore = Utils.parseInt(tokens[0]);
 			this.highScorePlayer = tokens[1];
