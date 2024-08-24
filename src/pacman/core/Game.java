@@ -5,6 +5,7 @@ import pacman.entities.Pacman;
 import pacman.entities.ghosts.Ghost;
 import pacman.graphics.ImageAssets;
 import pacman.input.KeyManager;
+import pacman.sounds.SoundAssets;
 import pacman.states.StateManager;
 import pacman.utils.Utils;
 
@@ -171,6 +172,7 @@ public class Game implements Runnable {
 		// Asynchronously load assets and start the game
 		new Thread(() -> {
 			ImageAssets.init();
+			SoundAssets.init();
 			this.stateManager.startMenuState();
 		}).start();
 	}
@@ -220,6 +222,7 @@ public class Game implements Runnable {
 	public void scorePoints(int points) {
 		if (this.score / 10000 != (this.score + points) / 10000) { // extra life for every 10,000 points scored
 			this.increaseLivesLeft();
+			SoundAssets.sound_extra_life.play();
 		}
 		this.score += points;
 

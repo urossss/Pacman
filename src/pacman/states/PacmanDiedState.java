@@ -4,6 +4,7 @@ import pacman.core.Game;
 import pacman.core.Handler;
 import pacman.graphics.Animation;
 import pacman.graphics.ImageAssets;
+import pacman.sounds.SoundAssets;
 
 import java.awt.*;
 
@@ -27,6 +28,8 @@ public class PacmanDiedState extends State {
 
 		this.timer = 0;
 		this.previousTime = System.currentTimeMillis();
+
+		SoundAssets.sound_pacman_died.play();
 	}
 
 	@Override

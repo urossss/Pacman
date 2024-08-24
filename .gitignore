@@ -9,6 +9,7 @@
 !/src/pacman/**
 !/resources/icon/*
 !/resources/maps/map.txt
+!/resources/sounds/*
 !/resources/textures/sheet.png
 
 # Don't ignore jar artifact

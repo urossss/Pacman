@@ -2,6 +2,7 @@ package pacman.states;
 
 import pacman.core.Handler;
 import pacman.graphics.TextRenderer;
+import pacman.sounds.SoundAssets;
 
 import java.awt.*;
 
@@ -42,6 +43,8 @@ public class NewRecordState extends State {
 
 		this.name = new char[MAX_NAME_LENGTH];
 		this.nameLength = 0;
+
+		SoundAssets.sound_intermission.loop();
 	}
 
 	@Override
@@ -83,6 +86,7 @@ public class NewRecordState extends State {
 
 			if (this.handler.getKeyManager().enter) {
 				if (this.isNameValid()) {
+					SoundAssets.sound_intermission.stop();
 					this.handler.getGame().saveNewHighScore(this.getName());
 					this.handler.getStateManager().startMenuState();
 				} else {

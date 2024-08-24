@@ -3,6 +3,7 @@ package pacman.states;
 import pacman.core.Board;
 import pacman.core.Handler;
 import pacman.graphics.ImageAssets;
+import pacman.sounds.SoundAssets;
 
 import java.awt.*;
 
@@ -30,6 +31,8 @@ public class GameReadyState extends State {
 		this.timer = 0;
 		this.previousTime = System.currentTimeMillis();
 		this.livesDecreased = false;
+
+		SoundAssets.sound_beginning.play();
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package pacman.states;
 
 import pacman.core.Handler;
+import pacman.entities.ghosts.Ghost;
+import pacman.sounds.SoundAssets;
 
 import java.awt.*;
 
@@ -47,7 +49,7 @@ public class GamePlayState extends State {
 		}
 
 		this.timerUpdates();
-
+		this.updateBackgroundSounds(); // needs to happen before board update so that these sounds don't get started after they got stopped somewhere else
 		this.handler.getBoard().update();
 
 		if (this.handler.getBoard().isCompleted()) {
@@ -101,4 +103,25 @@ public class GamePlayState extends State {
 		}
 	}
 
+	private void updateBackgroundSounds() {
+		if (Ghost.getDiedGhostsCount() > 0) { // there is a ghost returning to cage
+			SoundAssets.sound_pacman_chase.stop();
+			SoundAssets.sound_ghost_chase.stop();
+			if (!SoundAssets.sound_ghost_return.isActive()) {
+				SoundAssets.sound_ghost_return.loop();
+			}
+		} else if (Ghost.getVulnerableGhostsCount() > 0) { // there is a vulnerable ghost, pacman is chasing
+			SoundAssets.sound_ghost_chase.stop();
+			SoundAssets.sound_ghost_return.stop();
+			if (!SoundAssets.sound_pacman_chase.isActive()) {
+				SoundAssets.sound_pacman_chase.loop();
+			}
+		} else { // ghosts are chasing
+			SoundAssets.sound_pacman_chase.stop();
+			SoundAssets.sound_ghost_return.stop();
+			if (!SoundAssets.sound_ghost_chase.isActive()) {
+				SoundAssets.sound_ghost_chase.loop();
+			}
+		}
+	}
 }

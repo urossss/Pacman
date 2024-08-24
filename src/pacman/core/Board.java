@@ -3,6 +3,7 @@ package pacman.core;
 import pacman.entities.Creature.Direction;
 import pacman.entities.EntityManager;
 import pacman.graphics.ImageAssets;
+import pacman.sounds.SoundAssets;
 import pacman.tiles.*;
 import pacman.utils.Utils;
 
@@ -120,6 +121,8 @@ public class Board {
 		}
 
 		if (this.tiles[x][y].isEatable()) {
+			SoundAssets.sound_eat.play();
+
 			// increase game score
 			int score = this.tiles[x][y].getScore();
 			this.handler.getGame().scorePoints(score);

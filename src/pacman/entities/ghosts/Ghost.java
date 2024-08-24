@@ -3,6 +3,7 @@ package pacman.entities.ghosts;
 import pacman.core.Handler;
 import pacman.entities.Creature;
 import pacman.entities.ghosts.states.*;
+import pacman.sounds.SoundAssets;
 import pacman.tiles.Coordinates;
 
 import java.awt.*;
@@ -11,6 +12,9 @@ import java.util.ArrayList;
 public abstract class Ghost extends Creature {
 
 	public static final double GHOST_MAX_SPEED = 2.5;
+
+	private static int diedGhostsCount = 0;
+	private static int vulnerableGhostsCount = 0;
 
 	protected final Coordinates scatterTarget;
 	protected final Coordinates cageTarget = new Coordinates(14, 11);
@@ -226,6 +230,9 @@ public abstract class Ghost extends Creature {
 
 		this.currentState = this.diedState;
 		this.diedState.start();
+
+		SoundAssets.sound_ghost_died.play();
+		Ghost.decreaseVulnerableGhostsCount();
 	}
 
 	public void startScatterOrChaseState() {
@@ -312,7 +319,34 @@ public abstract class Ghost extends Creature {
 		// get out of vulnerable state
 		if (this.vulnerableStateEndTime > 0 && currentTime > this.vulnerableStateEndTime) {
 			this.vulnerableStateEndTime = -1;
+			Ghost.decreaseVulnerableGhostsCount();
 			this.startScatterOrChaseState();
 		}
+	}
+
+	// public static interface
+
+	public static int getDiedGhostsCount() {
+		return diedGhostsCount;
+	}
+
+	public static void increaseDiedGhostsCount() {
+		Ghost.diedGhostsCount++;
+	}
+
+	public static void decreaseDiedGhostsCount() {
+		Ghost.diedGhostsCount--;
+	}
+
+	public static int getVulnerableGhostsCount() {
+		return vulnerableGhostsCount;
+	}
+
+	public static void increaseVulnerableGhostsCount() {
+		Ghost.vulnerableGhostsCount++;
+	}
+
+	public static void decreaseVulnerableGhostsCount() {
+		Ghost.vulnerableGhostsCount--;
 	}
 }

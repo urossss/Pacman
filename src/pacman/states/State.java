@@ -4,6 +4,7 @@ import pacman.core.Game;
 import pacman.core.Handler;
 import pacman.graphics.ImageAssets;
 import pacman.graphics.TextRenderer;
+import pacman.sounds.SoundAssets;
 
 import java.awt.*;
 
@@ -32,6 +33,8 @@ public abstract class State {
 	}
 
 	public void start() {
+		this.stopBackgroundSounds();
+
 		this.stateStartTime = System.currentTimeMillis();
 		this._baseTimer = 0;
 		this._basePreviousTime = System.currentTimeMillis();
@@ -60,6 +63,9 @@ public abstract class State {
 		} else {
 			this.isHighScoreVisible = true;
 		}
+
+		// sound volume update
+		// TODO
 	}
 
 	public void render(Graphics g) {
@@ -100,4 +106,12 @@ public abstract class State {
 
 	protected abstract void renderImpl(Graphics g);
 
+	private void stopBackgroundSounds() {
+		if (!SoundAssets.SoundsLoaded) {
+			return;
+		}
+		SoundAssets.sound_pacman_chase.stop();
+		SoundAssets.sound_ghost_chase.stop();
+		SoundAssets.sound_ghost_return.stop();
+	}
 }

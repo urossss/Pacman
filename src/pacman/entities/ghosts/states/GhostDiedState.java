@@ -32,11 +32,13 @@ public class GhostDiedState extends GhostState {
 	@Override
 	public void startImpl() {
 		this.ghost.setSpeed(this.handler.getGame().getGhostDiedSpeed());
+		Ghost.increaseDiedGhostsCount();
 	}
 
 	@Override
 	public void updateImpl() {
 		if (this.ghost.getXTile() == this.diedTarget.x && this.ghost.getYTile() == this.diedTarget.y) {
+			Ghost.decreaseDiedGhostsCount();
 			this.ghost.startCageState(0);
 			return;
 		}
