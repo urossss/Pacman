@@ -78,6 +78,20 @@ public abstract class Creature extends Entity {
 		}
 	}
 
+	public double getSpeed() {
+		return this.speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+	public Direction getCurrentDirection() {
+		return this.currentDirection;
+	}
+
+	// movement implementation
+
 	private void setMovesAndTiles(Direction direction) {
 		this.xTileCurrent = this.getXTile();
 		this.yTileCurrent = this.getYTile();
@@ -170,15 +184,4 @@ public abstract class Creature extends Entity {
 		return '?';
 	}
 
-	public double getSpeed() {
-		return this.speed;
-	}
-
-	public void setSpeed(double speed) {
-		this.speed = speed;
-	}
-
-	public Direction getCurrentDirection() {
-		return this.currentDirection;
-	}
 }

@@ -51,6 +51,8 @@ public abstract class Ghost extends Creature {
 
 	public abstract int getMaxCageTimeMillis();
 
+	// public interface
+
 	@Override
 	protected Direction calculateDesiredDirection() {
 		if (this.currentState == null) {
@@ -157,8 +159,6 @@ public abstract class Ghost extends Creature {
 			return this.currentState instanceof GhostDiedState;
 		}
 	}
-
-	// public interface
 
 	@Override
 	public void update() {
