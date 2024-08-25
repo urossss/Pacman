@@ -6,7 +6,6 @@ import pacman.entities.ghosts.Ghost;
 import pacman.graphics.Animation;
 import pacman.graphics.ImageAssets;
 import pacman.tiles.Coordinates;
-import pacman.tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

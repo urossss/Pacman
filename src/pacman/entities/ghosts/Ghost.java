@@ -330,6 +330,10 @@ public abstract class Ghost extends Creature {
 		return diedGhostsCount;
 	}
 
+	public static void setDiedGhostsCount(int diedGhostsCount) {
+		Ghost.diedGhostsCount = diedGhostsCount;
+	}
+
 	public static void increaseDiedGhostsCount() {
 		Ghost.diedGhostsCount++;
 	}
@@ -340,6 +344,10 @@ public abstract class Ghost extends Creature {
 
 	public static int getVulnerableGhostsCount() {
 		return vulnerableGhostsCount;
+	}
+
+	public static void setVulnerableGhostsCount(int vulnerableGhostsCount) {
+		Ghost.vulnerableGhostsCount = vulnerableGhostsCount;
 	}
 
 	public static void increaseVulnerableGhostsCount() {

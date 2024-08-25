@@ -3,7 +3,6 @@ package pacman.entities;
 import pacman.core.Handler;
 import pacman.graphics.Animation;
 import pacman.graphics.ImageAssets;
-import pacman.tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -83,6 +83,9 @@ public class GamePlayState extends State {
 		if (this.scatterChaseSwitchTimes.length > 0) {
 			this.scatterChaseNextSwitchTime = this.scatterChaseSwitchTimes[0] * 1000;
 		}
+
+		Ghost.setDiedGhostsCount(0);
+		Ghost.setVulnerableGhostsCount(0);
 	}
 
 	private void timerUpdates() {
