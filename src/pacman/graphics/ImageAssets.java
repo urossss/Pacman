@@ -17,6 +17,7 @@ public class ImageAssets {
 	public static BufferedImage map1, map2, food, powerFood;
 	public static BufferedImage underscore;
 	public static BufferedImage[] ghost_eaten_points;
+	public static BufferedImage[] sound_controls;
 
 	public static void init() {
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
@@ -66,6 +67,8 @@ public class ImageAssets {
 		powerFood = sheet.crop(8, 66, 18, 18);
 
 		ghost_eaten_points = loadArray(sheet, 0, 236, 4, 16);
+
+		sound_controls = loadArray(sheet, 0, 219, 4, 16);
 	}
 
 	private static BufferedImage[] loadArray(SpriteSheet sheet, int x, int y, int n, int size) {

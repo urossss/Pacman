@@ -15,6 +15,7 @@ public abstract class State {
 	private boolean shouldDrawScore = true;
 	private boolean shouldDrawHighScore = true;
 	private boolean shouldDrawLives = true;
+	private boolean shouldDrawSoundControls = true;
 	private boolean isHighScoreVisible = true;
 	private long _basePreviousTime;
 	private long _baseTimer;
@@ -72,6 +73,17 @@ public abstract class State {
 		this.renderImpl(g);
 
 		Game game = this.handler.getGame();
+
+		if (this.shouldDrawSoundControls && ImageAssets.sound_controls != null) {
+			int volume = game.getCurrentSoundVolume();
+			g.drawImage(
+					ImageAssets.sound_controls[volume],
+					Game.GAME_BOARD_WIDTH_PIXELS - 28,
+					Game.GAME_BOARD_HEIGHT_PIXELS + Game.GAME_TOP_SECTION_HEIGHT_PIXELS + 4,
+					24,
+					24,
+					null);
+		}
 
 		if (this.shouldDrawScore) {
 			TextRenderer.drawText(g, "score", 10, 5);

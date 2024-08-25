@@ -5,6 +5,7 @@ import pacman.entities.Pacman;
 import pacman.entities.ghosts.Ghost;
 import pacman.graphics.ImageAssets;
 import pacman.input.KeyManager;
+import pacman.input.SoundControlManager;
 import pacman.sounds.SoundAssets;
 import pacman.states.StateManager;
 import pacman.utils.Utils;
@@ -37,6 +38,9 @@ public class Game implements Runnable {
 	private Handler handler;
 	private StateManager stateManager;
 	private KeyManager keyManager;
+
+	private SoundControlManager soundControlManager;
+	private int currentSoundVolume = 3;
 
 	// Game variables
 	private int score;
@@ -164,8 +168,10 @@ public class Game implements Runnable {
 		this.handler.setStateManager(this.stateManager);
 
 		this.keyManager = new KeyManager();
+		this.soundControlManager = new SoundControlManager();
 		this.handler.setKeyManager(this.keyManager);
 		this.display.getFrame().addKeyListener(this.keyManager);
+		this.display.getCanvas().addMouseListener(this.soundControlManager);
 
 		this.stateManager.startLoadingState();
 
@@ -179,6 +185,13 @@ public class Game implements Runnable {
 
 	private void update() {
 		this.keyManager.update();
+
+		int newSoundVolume = this.soundControlManager.getSoundVolume();
+		if (newSoundVolume != this.currentSoundVolume) {
+			SoundAssets.setSoundsVolume(newSoundVolume);
+			this.currentSoundVolume = newSoundVolume;
+		}
+
 		this.stateManager.update();
 	}
 
@@ -371,16 +384,16 @@ public class Game implements Runnable {
 		return livesLeft;
 	}
 
-	public int getCurrentLevel() {
-		return currentLevel;
-	}
-
 	public boolean isGhostScatterModeActive() {
 		return ghostScatterModeActive;
 	}
 
 	public int getGhostsEatenCount() {
 		return ghostsEatenCount;
+	}
+
+	public int getCurrentSoundVolume() {
+		return currentSoundVolume;
 	}
 
 	// Private implementation

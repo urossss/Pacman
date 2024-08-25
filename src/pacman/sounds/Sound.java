@@ -27,11 +27,6 @@ public class Sound {
 					synchronized (clip) {
 						clip.stop();
 						clip.setFramePosition(0);
-
-						FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-						float gain = 20f * (float) Math.log10(1.0);
-						gainControl.setValue(gain);
-
 						clip.start();
 					}
 				}).start();
@@ -68,4 +63,16 @@ public class Sound {
 		return clip.isActive();
 	}
 
+	public void setVolume(float volume) {
+		if (clip == null) {
+			return;
+		}
+		if (volume < 0 || volume > 1) {
+			return;
+		}
+
+		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		float gain = 20f * (float) Math.log10(volume);
+		gainControl.setValue(gain);
+	}
 }
