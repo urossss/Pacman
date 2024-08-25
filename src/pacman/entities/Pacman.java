@@ -51,8 +51,10 @@ public class Pacman extends Creature {
 			this.setSpeed(this.handler.getGame().getPacmanRegularSpeed());
 		}
 
-		this.move();
-		this.handler.getBoard().eatTile(this.getXTile(), this.getYTile());
+		int eatScore = this.handler.getBoard().eatTile(this.getXTile(), this.getYTile());
+		if (eatScore == 0) {
+			this.move();
+		}
 	}
 
 	@Override

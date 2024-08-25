@@ -115,9 +115,9 @@ public class Board {
 		this.handler.setEntityManager(this.entityManager);
 	}
 
-	public void eatTile(int x, int y) {
+	public int eatTile(int x, int y) {
 		if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
-			return;
+			return 0;
 		}
 
 		if (this.tiles[x][y].isEatable()) {
@@ -138,7 +138,11 @@ public class Board {
 			 // reduce food counter and create the Fruit object if needed
 			this.foodLeft--;
 			this.foodEaten++;
+
+			return score;
 		}
+
+		return 0;
 	}
 
 	public boolean isTileInsideGhostCage(int x, int y) {
