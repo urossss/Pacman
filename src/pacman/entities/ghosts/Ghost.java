@@ -350,10 +350,6 @@ public abstract class Ghost extends Creature {
 		Ghost.vulnerableGhostsCount = vulnerableGhostsCount;
 	}
 
-	public static void increaseVulnerableGhostsCount() {
-		Ghost.vulnerableGhostsCount++;
-	}
-
 	public static void decreaseVulnerableGhostsCount() {
 		Ghost.vulnerableGhostsCount--;
 	}

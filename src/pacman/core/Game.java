@@ -291,6 +291,7 @@ public class Game implements Runnable {
 		for (Ghost g : this.handler.getEntityManager().getGhosts()) {
 			g.startVulnerableState();
 		}
+		Ghost.setVulnerableGhostsCount(4);
 
 		Pacman pacman = this.handler.getEntityManager().getPacman();
 		pacman.setSpeed(this.getPacmanPowerSpeed());

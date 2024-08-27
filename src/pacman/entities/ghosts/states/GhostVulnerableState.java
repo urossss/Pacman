@@ -56,8 +56,6 @@ public class GhostVulnerableState extends GhostState {
 		this.animationSwitchStartTime = this.handler.getGame().getGhostVulnerableStateDurationMillis() - 3000;
 
 		this.animations = this.animations1;
-
-		Ghost.increaseVulnerableGhostsCount();
 	}
 
 	@Override
