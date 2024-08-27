@@ -83,8 +83,12 @@ public class Game implements Runnable {
 
 			// Tick the game if it's time for it
 			if (currentNanoTime >= nextGameTick) {
-				this.update();
-				this.render();
+				try {
+					this.update();
+					this.render();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
 				nextGameTick += TIME_PER_TICK;
 
